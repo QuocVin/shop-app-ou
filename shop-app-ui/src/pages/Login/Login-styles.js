@@ -13,7 +13,7 @@ export const useStyles = makeStyles((theme) => ({
 			border: '1px solid',
 			borderRadius: '25px',
 		},
-		'& .title-logic': {
+		'& .title-login': {
 			textAlign: 'center',
 			padding: '20px',
 		}

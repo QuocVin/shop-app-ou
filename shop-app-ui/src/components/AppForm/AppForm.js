@@ -20,17 +20,29 @@ export default function AppForm({
 }) {
 	const classes = useStyles();
 
-	const RenderBoxBtn = () => {
-		return (
-			<Box className={classes.AppForm}>
-				<Box className='row-search'>
-					<Button className='btn-search btn-goback' onClick={onGoBack}>Quay về</Button>
+	const RenderBoxBtn = ({ formType }) => {
+		if (['insert', 'update'].includes(formType)) {
+			return (
+				<Box className={classes.AppForm}>
+					<Box className='row-search'>
+						<Button className='btn-action btn-goback' onClick={onGoBack}>Quay về</Button>
+					</Box>
+					<Box >
+						<Button className='btn-action btn-submit' type="submit">{formType === 'insert' ? 'Tạo mới' : 'Cập nhật'}</Button>
+					</Box>
 				</Box>
-				<Box >
-					<Button className='btn-search btn-submit' type="submit">{formType === 'insert' ? 'Tạo mới' : 'Cập nhật'}</Button>
+			)
+		} else if (['login', 'register'].includes(formType)) {
+			return (
+				<Box className={classes.AppForm}>
+					<Button className='btn-action2 btn-submit' type="submit" fullWidth>{formType === 'login' ? 'Submit' : 'Đăng ký'}</Button>
 				</Box>
-			</Box>
-		)
+			)
+		} else {
+			return (
+				<></>
+			)
+		}
 	}
 
 	return (
@@ -67,7 +79,7 @@ export default function AppForm({
 							</Grid>
 						)
 				})}
-				<RenderBoxBtn />
+				<RenderBoxBtn formType={formType} />
 			</Grid>
 		</form>
 	);

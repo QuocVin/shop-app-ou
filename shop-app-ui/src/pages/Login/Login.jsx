@@ -43,12 +43,6 @@ export default function Login() {
 
 	const login = async (event) => {
 		const formData = Object.assign({}, getValues())
-		const formInfo = {
-			formType: 'login',
-			auth: 'admin',
-			note: 'AdminSaleInfoDetail',
-		}
-		infoRequest(formData, formInfo);
 		try {
 			if (event) {
 				event.preventDefault();
@@ -101,7 +95,7 @@ export default function Login() {
 		<Container className={classes.Login}>
 			<Box className='box-login'>
 				<Box>
-					<Typography variant="h4" className='title-logic'>{PublicRoutes.Login.label}</Typography>
+					<Typography variant="h4" className='title-login'>{PublicRoutes.Login.label}</Typography>
 				</Box>
 
 				{/* tìm kiếm */}

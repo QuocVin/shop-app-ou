@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export let endpoints = {
 	'login': '/api/authenticate',
+	'register': '/api/users/createUser',
 
 	'admin/product': (params, page) => '/api/products/getPageProducts' + `?page=${page || 1}` + params,
 	'admin/product/id': (params) => '/api/products/detail' + `?product_id=${params}`,

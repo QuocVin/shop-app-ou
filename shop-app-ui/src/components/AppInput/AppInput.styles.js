@@ -11,10 +11,12 @@ export const useStyles = makeStyles((theme) => ({
 		width: '170px'
 	},
 	labelBorder: {
-		padding: "15px 20px",
+		padding: "15px 10px",
 		borderTopLeftRadius: "5px",
 		borderBottomLeftRadius: "5px",
-		width: "170px",
+		width: "150px",
+		minWidth: "150px",
+		maxWidth: "150px",
 		border: "1px solid #AEAAA8",
 		backgroundColor: '#ebe6e3',
 		alignContent: 'center',

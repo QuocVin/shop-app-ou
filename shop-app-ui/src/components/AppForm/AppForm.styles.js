@@ -13,9 +13,14 @@ export const useStyles = makeStyles((theme) => ({
 		'& .row-search .form-input .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl': {
 			height: '45px',
 		},
-		'& .btn-search': {
+		'& .btn-action': {
 			height: '38px',
 			width: '90px',
+			padding: 0,
+			color: '#FFF',
+		},
+		'& .btn-action2': {
+			height: '38px',
 			padding: 0,
 			color: '#FFF',
 		},

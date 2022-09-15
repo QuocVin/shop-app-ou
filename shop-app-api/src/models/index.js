@@ -1,6 +1,6 @@
 // users[0] là tạo mới, users[1] là cập nhật
 const users = [
-  ["user_id", "username", "password", "name", "date_ob", "gen", "phone", "validationflag", "status_acc", "role_name", "created_date", "created_by", "created_note", "update_date", "update_by", "update_note"],
+  ["username", "password", "name", "date_ob", "gen", "phone", "validationflag", "status_acc", "role_name", "created_date", "created_by", "created_note", "update_date", "update_by", "update_note"],
   ["user_id", "username", "password", "name", "date_ob", "gen", "phone", "validationflag", "status_acc", "update_date", "update_by", "update_note"],
 ]
 

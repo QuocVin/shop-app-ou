@@ -73,7 +73,7 @@ exports.insert = async (tableName, { columns, rows }) => {
 		rowsSafe = rowsSafe.map((r) => {
 			return {
 				...r,
-				id: uuid(),
+				// id: uuid(),
 			};
 		});
 

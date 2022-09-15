@@ -6,7 +6,7 @@ export const infoRequest = (formData, formInfo) => {
 		formData.created_note = note;
 		formData.update_date = new Date();
 		formData.update_by = auth;
-		formData.update_note = 'build act create new product';
+		formData.update_note = note;
 	} else {
 		formData.update_date = new Date();
 		formData.update_by = auth;
