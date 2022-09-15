@@ -111,7 +111,7 @@ export default function AdminProduct() {
 
 				{/* danh sách sản phẩm */}
 				{loading ? <p>Loading ...</p> :
-					<AppTable columns={AdminProductColumns} data={productList} actHandleChoose={paramToDetail} />
+					<AppTable columns={AdminProductColumns} data={productList} paramsChoose={paramToDetail} />
 				}
 			</Box>
 

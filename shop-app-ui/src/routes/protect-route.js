@@ -12,6 +12,7 @@ import PageAdminSaleInfoDetail from "../pages/AdminSaleInfoDetail";
 // import PageAdminProductDetail__ from "../pages/AdminProductDetail__";
 // import PageAdminProductNews__ from "../pages/AdminProductNews__";
 
+import PageLogin from "../pages/Login";
 
 
 const NEDRoutes = {
@@ -37,6 +38,9 @@ export const ProtectRouteNames = {
 	AdminProduct__: 'AdminProduct__',
 	AdminProductDetail__: 'AdminProductDetail__',
 	AdminProductNews__: 'AdminProductNews__',
+
+	Login: 'Login',
+
 }
 
 // đường dẫn chỉ đến view admin
@@ -50,10 +54,20 @@ export const ProtectPaths = {
 	AdminProduct__: ['/Admin', ProtectRouteNames.AdminProduct__].join('/'),
 	AdminProductDetail__: ['/Admin', ProtectRouteNames.AdminProductDetail__, NEDRoutes.Detail].join('/'),
 	AdminProductNews__: ['/Admin', ProtectRouteNames.AdminProductNews__, NEDRoutes.New].join('/'),
+
+	Login: ['', ProtectRouteNames.Login].join('/'),
+
 }
 
 // thông tin cần thiết để hiển thị 1 view admin
 export const ProtectRoutes = {
+	// Login: {
+	// 	exact: true,
+	// 	id: ProtectRouteNames.Login,
+	// 	label: "Đăng nhập",
+	// 	path: ProtectPaths.Login,
+	// 	component: PageLogin,
+	// },
 	Dashboard: {
 		exact: true,
 		id: ProtectRouteNames.Dashboard,

@@ -125,24 +125,11 @@ create table [dbo].[discount_codes](
 -- thông tin bài viết
 create table [dbo].[sales_infos](
 	[sales_info_id]			[int] not null identity(1,1) primary key,
+	[product_id]			[int] not null,
+	-- [discount_code_id]		[int] null,
 	[title]					[nvarchar](50) null,
 	[content]				[nvarchar](max) null,
-	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
-	[created_date]			[datetime] null,
-	[created_by]			[nvarchar](50) null,
-	[created_note]			[nvarchar](50) null,
-	[update_date]			[datetime] null,
-	[update_by]				[nvarchar](50) null,
-	[update_note]			[nvarchar](50) null,
-);
-
-
-create table [dbo].[sales_info_product](
-	[sales_info_id]			[int] not null identity(1,1) primary key,
-	[product_id]			[int] not null,
-	[discount_code_id]		[nvarchar](50) null,
-	[content]				[nvarchar](max) null,
-	[qty]					[numeric] default 0 null,
+	[image]					[nvarchar](max) null,
 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
 	[created_date]			[datetime] null,
 	[created_by]			[nvarchar](50) null,
@@ -151,9 +138,26 @@ create table [dbo].[sales_info_product](
 	[update_by]				[nvarchar](50) null,
 	[update_note]			[nvarchar](50) null,
 
-	CONSTRAINT FK_sales_info_id	FOREIGN KEY (sales_info_id)		REFERENCES sales_infos(sales_info_id),
 	CONSTRAINT FK_product_id	FOREIGN KEY (product_id)		REFERENCES products(product_id),
 );
+
+
+-- create table [dbo].[sales_info_product](
+-- 	[sales_info_id]			[int] not null identity(1,1) primary key,
+-- 	[product_id]			[int] not null,
+-- 	[content]				[nvarchar](max) null,
+-- 	[qty]					[numeric] default 0 null,
+-- 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
+-- 	[created_date]			[datetime] null,
+-- 	[created_by]			[nvarchar](50) null,
+-- 	[created_note]			[nvarchar](50) null,
+-- 	[update_date]			[datetime] null,
+-- 	[update_by]				[nvarchar](50) null,
+-- 	[update_note]			[nvarchar](50) null,
+
+-- 	CONSTRAINT FK_sales_info_id	FOREIGN KEY (sales_info_id)		REFERENCES sales_infos(sales_info_id),
+-- 	CONSTRAINT FK_product_id	FOREIGN KEY (product_id)		REFERENCES products(product_id),
+-- );
 
 
 -- hóa đơn

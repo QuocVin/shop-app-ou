@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import {
-    Button,
-    CssBaseline,
-    TextField,
-    Link,
-    Grid,
-    Typography,
-    Container,
-    Snackbar,
+	Button,
+	CssBaseline,
+	TextField,
+	Link,
+	Grid,
+	Typography,
+	Container,
+	Box,
 } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
-import useSubmitForm from '../../helpers/CustomHooks';
 import API, { endpoints } from '../../helpers/API';
 import cookies from 'react-cookies';
 import { Redirect } from 'react-router';
@@ -18,124 +16,104 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useStyles } from "./Login-styles";
 import { setAuthLS, LS_KEY } from "../../helpers/localStorage";
-
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import { formFields } from "./Login-const";
+import { useForm } from "react-hook-form";
+import {
+	AppTable,
+	AppInput,
+	AppForm,
+	AppSearch,
+	AppAlert,
+} from '../../components';
+import { PublicRoutes } from '../../routes/public-route';
+import { infoRequest } from '../../helpers/utils';
+import { ProtectPaths } from '../../routes/protect-route';
 
 export default function Login() {
-    const classes = useStyles();
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const [isLogged, setLogged] = useState(false);
-    const [open, setOpen] = useState(false);
+	const classes = useStyles();
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const [openAlert, setOpenAlert] = React.useState(false);
+	const [alertInfo, setAlertInfo] = React.useState(false);
+	const { control, setValue, getValues } = useForm();
 
-    const signInSucess = (role) => {
-        setAuthLS(LS_KEY.AUTH_TOKEN, role);
-    }
+	const signInSucess = (role) => {
+		setAuthLS(LS_KEY.AUTH_TOKEN, role);
+	}
 
-    const login = async () => {
-        try {
-            const info = await API.get(endpoints['oauth2-info']);
+	const login = async (event) => {
+		const formData = Object.assign({}, getValues())
+		const formInfo = {
+			formType: 'login',
+			auth: 'admin',
+			note: 'AdminSaleInfoDetail',
+		}
+		infoRequest(formData, formInfo);
+		try {
+			if (event) {
+				event.preventDefault();
+			}
+			let res = await API.post(endpoints['login'],
+				JSON.stringify(formData),
+				{
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				});
+			if (res.data.error) {
+				setAlertInfo({
+					typeAlert: { warning: true },
+					label: 'Sai thông tin đăng nhập!',
+				})
+				setOpenAlert(true);
+			} else {
+				cookies.save("access_token", res.data.result.auth.access_token)
+				signInSucess(res.data.result.profile.role_name);
+				console.info(res)
+				cookies.save("user", res.data.result.profile.username);
+				history.push(ProtectPaths.AdminProduct);
+				// dispatch({
+				// 	"type": "login",
+				// 	"payload": res.data.result.profile
+				// })
+			}
+		} catch (err) {
+			console.log("ERROR:\n", err);
+			setOpenAlert(true);
+			setAlertInfo({
+				typeAlert: { error: true },
+				label: 'Lỗi hệ thống, bạn vui lòng kiểm tra lại kết nối!'
+			})
+		}
+	}
 
-            const res = await API.post(endpoints['login'], {
-                client_id: info.data.client_id,
-                client_secret: info.data.client_secret,
-                username: inputs.username,
-                password: inputs.password,
-                grant_type: "password",
-            })
+	// xử lý sự kiện đóng thông báo
+	const handleCloseAlert = (event, reason) => {
+		if (reason === 'clickaway') {
+			setOpenAlert(false);
+			if (alertInfo.typeAlert.success) {
+				window.location.reload();
+			}
+		}
+	};
 
-            cookies.save("access_token", res.data.access_token)
+	return (
+		<Container className={classes.Login}>
+			<Box className='box-login'>
+				<Box>
+					<Typography variant="h4" className='title-logic'>{PublicRoutes.Login.label}</Typography>
+				</Box>
 
-            let user = await API.get(endpoints['current-user'], {
-                headers: {
-                    Authorization: `Bearer ${cookies.load("access_token")}`
-                }
-            })
+				{/* tìm kiếm */}
+				<AppForm
+					fields={formFields()}
+					control={control}
+					onGoSubmit={login}
+					formType={'login'}
+				/>
+			</Box>
 
-            cookies.save("user", user.data);
-            signInSucess(user.data.role);
-            dispatch({
-                "type": "login",
-                "payload": user.data
-            })
-            setLogged(true);
-            window.location.reload();
-        } catch (err) {
-            setOpen(true)
-            console.info(err)
-        }
-    }
-
-    const { inputs, handleInputChange, handleSubmit } = useSubmitForm(login);
-
-    // xử lý tắt thông báo
-    const handleCloseAlert = () => {
-        setOpen(false);
-    };
-
-    if (isLogged)
-        return <Redirect to="/" />
-    else
-        return (
-            <Container component="main" maxWidth="xs" >
-                <CssBaseline />
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
-                    <form className={classes.form} onSubmit={handleSubmit}>
-                        <TextField
-                            name="username"
-                            label="username"
-                            id="username"
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            autoComplete="current-username"
-                            autoFocus
-                            value={inputs.username}
-                            onChange={handleInputChange}
-                        />
-                        <TextField
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            value={inputs.password}
-                            onChange={handleInputChange}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Đăng nhâp
-                        </Button>
-                        <Grid container>
-                            <Grid item>
-                                <Link href="/Register" variant="body2">
-                                    {"Bạn chưa có tài khoản? Đăng ký"}
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
-
-                {/* xử lý thông báo khi đăng nhâp thất bại */}
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleCloseAlert}>
-                    <Alert onClose={handleCloseAlert} severity="warning">
-                        Sai tài khoản hoặc mật khẩu!!!
-                    </Alert>
-                </Snackbar>
-            </Container>
-        );
+			<AppAlert open={openAlert} handleClose={handleCloseAlert} typeAlert={alertInfo?.typeAlert} label={alertInfo?.label} />
+		</Container>
+	);
 }

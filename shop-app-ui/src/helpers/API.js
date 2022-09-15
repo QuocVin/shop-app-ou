@@ -1,11 +1,7 @@
 import axios from 'axios';
 
 export let endpoints = {
-	'user': '/user/',
-	'current-user': '/user/current-user/',
-	'oauth2-info': '/oauth2-info/',
-	'login': '/o/token/',
-	'is-booking': 'is-booking/',
+	'login': '/api/authenticate',
 
 	'admin/product': (params, page) => '/api/products/getPageProducts' + `?page=${page || 1}` + params,
 	'admin/product/id': (params) => '/api/products/detail' + `?product_id=${params}`,

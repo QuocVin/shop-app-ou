@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles((theme) => ({
 	root: {
 		'&:nth-of-type(odd)': {
-			backgroundColor: theme.palette.action.hover,
+			// backgroundColor: theme.palette.action.hover,
 		},
 		width: 'fit-content'
 		// '& .MuiTableCell-root': {

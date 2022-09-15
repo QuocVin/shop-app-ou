@@ -100,7 +100,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 									disabled={field?.disabled || false}
 									labelId="demo-customized-select-label"
 									id="demo-customized-select"
-									value={value}
+									value={value || ''}
 									onChange={onChange}
 									input={<BootstrapInput />}
 								>
@@ -144,9 +144,13 @@ export default function AppInput({ field = {}, control, className = '', componen
 						if (field?.required) {
 							_more.required = true;
 						}
+						if (field?.disabled) {
+							_more.disabled = true;
+						}
 						return (
 							<FormControl component="fieldset" className={classes.boxInput}>
 								<TextField
+									label=''
 									control={control}
 									value={value}
 									onChange={onChange}

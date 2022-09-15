@@ -31,11 +31,11 @@ const StyledTableCell = withStyles((theme) => ({
 export default function AppTable({
 	columns = [],
 	data = [],
-	handleChooseBooking = () => { },
+	handleChooseItem = () => { },
 	isPagination = true,
 	isBtn = true,
 	fillCategory = [],
-	actHandleChoose = {},
+	paramsChoose = {},
 }) {
 	const classes = useStyles();
 	const history = useHistory();
@@ -106,9 +106,9 @@ export default function AppTable({
 						</TableRow>
 					</TableHead>
 					<TableBody >
-						{data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idx) => {
+						{data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idxR) => {
 							return (
-								<TableRow hover role="checkbox" tabIndex={-1} key={`${idx}-row-table`}>
+								<TableRow hover role="checkbox" tabIndex={-1} key={`${idxR}-row-table`} id={`table-${idxR}-data-row-${row.created_note}`}>
 									<StyledTableCell
 										align='center'
 										style={{
@@ -116,15 +116,15 @@ export default function AppTable({
 											maxWidth: 70,
 											width: 70
 										}}
-									>{idx + 1}</StyledTableCell>
-									{columns.map((column) => {
+									>{idxR + 1}</StyledTableCell>
+									{columns.map((column, idx) => {
 										const value = row[column.id];
-										console.info()
 										return (
 											<StyledTableCell
 												key={column.id}
 												align={column.align ? column.align : 'left'}
-												onClick={handleChoose ? () => handleChoose(row, actHandleChoose) : () => handleChooseBooking(row.tourId, row.employeeId)}
+												// onClick={handleChooseItem ? () => handleChooseItem(row) : () => handleChoose(row, paramsChoose)}
+												onClick={Object.keys(paramsChoose).length > 0 ? () => handleChoose(row, paramsChoose) : () => handleChooseItem(row, `table-${idxR}-data-row-${row.created_note}`)}
 												style={{
 													minWidth: column.width,
 													maxWidth: column.width,
