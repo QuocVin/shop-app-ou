@@ -6,11 +6,7 @@ import HeaderComponent from "./components/Header-component";
 import { useStyles } from "./DefaultLayout-styles";
 import { Box, useScrollTrigger } from "@material-ui/core";
 import { getAuthLS, LS_KEY } from '../../src/helpers/localStorage';
-
-const rolePaths = {
-  EMPLOYEE: 'NHAN VIEN',
-  ADMIN: 'QUAN LY',
-}
+import { rolePaths } from '../helpers/utils';
 
 export default function ({ children, setToken, ...rest }) {
   const classes = useStyles();

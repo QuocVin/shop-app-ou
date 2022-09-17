@@ -13,3 +13,9 @@ export const infoRequest = (formData, formInfo) => {
 		formData.update_note = note;
 	}
 }
+
+export const rolePaths = {
+	CUSTOMER: 'register',
+	EMPLOYEE: 'manager',
+	ADMIN: 'admin',
+}

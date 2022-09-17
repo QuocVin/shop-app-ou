@@ -10,11 +10,12 @@ import { PublicRoutes, PublicPaths } from "./routes/public-route";
 import { ProtectRoutes, ProtectPaths } from "./routes/protect-route";
 import { getAuthLS, LS_KEY, clearAuthLS } from '../src/helpers/localStorage';
 import cookies from 'react-cookies';
+import { rolePaths } from './helpers/utils'
 
 function App() {
-	// const loggedIn = true;
 	let loggedIn = getAuthLS(LS_KEY.AUTH_TOKEN) ? true : false;
 	const check = getAuthLS(LS_KEY.AUTH_TOKEN)
+
 	if (cookies.load("user") == null || !loggedIn) {
 		loggedIn = false;
 		clearAuthLS();
@@ -25,19 +26,18 @@ function App() {
 	function AdminLayout(props) {
 		return (
 			<Layout {...props}>
-				<Switch>
-					{Object.values(ProtectRoutes).map((route, idx) => {
-						return (
-							<Route
-								key={`${idx}-protect`}
-								path={route.path}
-								exact={route.exact}
-								render={(props) => <route.component {...props} />}
-							/>
-						);
-					})}
-					<Redirect to={ProtectPaths.AdminProduct} />
-				</Switch>
+				{Object.values(ProtectRoutes).map((route, idx) => {
+					return (
+						<Route
+							key={`${idx}-protect`}
+							path={route.path}
+							exact={route.exact}
+							render={(props) => <route.component {...props} />}
+						/>
+					);
+				})}
+				<Redirect strict from="*" to={ProtectPaths.AdminProduct} />
+				{/* <Redirect to={ProtectPaths.AdminProduct} /> */}
 			</Layout>
 		);
 	}
@@ -45,28 +45,19 @@ function App() {
 	function GuestLayout(props) {
 		return (
 			<Layout {...props}>
-				<Switch>
-					{Object.values(PublicRoutes).map((route, idx) => {
-						return (
-							<Route
-								key={`${idx}-protect`}
-								path={route.path}
-								exact={route.exact}
-								render={(props) => <route.component {...props} />}
-							/>
-						);
-					})}
-					<Redirect to={PublicPaths.Login} />
-				</Switch>
+				{Object.values(PublicRoutes).map((route, idx) => {
+					return (
+						<Route
+							key={`${idx}-public-guest`}
+							path={route.path}
+							exact={route.exact}
+							render={(props) => <route.component {...props} />}
+						/>
+					);
+				})}
+				<Redirect strict from="*" to="/" />
 			</Layout>
 		);
-	}
-
-	const rolePaths = {
-		GUEST: 'KHACH',
-		CUSTOMER: 'NGUOI DUNG',
-		EMPLOYEE: 'NHAN VIEN',
-		ADMIN: 'QUAN LY',
 	}
 
 	function ManageRoute({ role = rolePaths.GUEST }) {

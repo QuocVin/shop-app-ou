@@ -58,6 +58,14 @@ export default function AppTable({
 		if (formatType === 'date') {
 			return moment(data).format("DD-MM-YYYY").toString()
 		}
+		if (formatType === 'gen') {
+			return data === 'm' ? 'Nam' : 'Nữ'
+		}
+		if (formatType === 'status') {
+			if (data === 'forgot_password') return 'Quên mật khẩu';
+			if (data === 'reset_password') return 'Chờ đăng nhập';
+			return 'Hoạt động';
+		}
 		return data
 	}
 

@@ -2,6 +2,9 @@ import DashboardPage from "../pages/Dashboard";
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from '@material-ui/icons/People';
 
+import PageAdminUserManagement from "../pages/AdminUserManagement";
+import PageAdminUserManagementDetail from "../pages/AdminUserManagementDetail";
+
 import PageAdminProduct from "../pages/AdminProduct";
 import PageAdminProductDetail from "../pages/AdminProductDetail";
 
@@ -12,9 +15,6 @@ import PageAdminSaleInfoDetail from "../pages/AdminSaleInfoDetail";
 // import PageAdminProductDetail__ from "../pages/AdminProductDetail__";
 // import PageAdminProductNews__ from "../pages/AdminProductNews__";
 
-import PageLogin from "../pages/Login";
-
-
 const NEDRoutes = {
 	New: "new",
 	Detail: ":id"
@@ -23,9 +23,10 @@ const NEDRoutes = {
 // tên route cho từng view admin
 export const ProtectRouteNames = {
 	Dashboard: 'Admin',
-	Customer: 'Customer',
-	CustomerNew: 'CustomerNew',
-	CustomerDetail: 'CustomerDetail',
+
+	AdminUserManagement: 'AdminUserManagement',
+	AdminUserManagementDetail: 'AdminUserManagementDetail',
+	AdminUserManagementNews: 'AdminUserManagementNews',
 
 	AdminProduct: 'AdminProduct',
 	AdminProductDetail: 'AdminProductDetail',
@@ -35,45 +36,60 @@ export const ProtectRouteNames = {
 	AdminSaleInfoDetail: 'AdminSaleInfoDetail',
 	AdminSaleInfoNews: 'AdminSaleInfoNews',
 
-	AdminProduct__: 'AdminProduct__',
-	AdminProductDetail__: 'AdminProductDetail__',
-	AdminProductNews__: 'AdminProductNews__',
-
-	Login: 'Login',
-
 }
 
 // đường dẫn chỉ đến view admin
 export const ProtectPaths = {
 	Dashboard: ['', ProtectRouteNames.Dashboard].join('/'),
 
+	AdminUserManagement: ['/Admin', ProtectRouteNames.AdminUserManagement].join('/'),
+	AdminUserManagementDetail: ['/Admin', ProtectRouteNames.AdminUserManagementDetail, NEDRoutes.Detail].join('/'),
+	AdminUserManagementNews: ['/Admin', ProtectRouteNames.AdminUserManagementNews, NEDRoutes.New].join('/'),
+
 	AdminProduct: ['/Admin', ProtectRouteNames.AdminProduct].join('/'),
 	AdminProductDetail: ['/Admin', ProtectRouteNames.AdminProductDetail, NEDRoutes.Detail].join('/'),
 	AdminProductNews: ['/Admin', ProtectRouteNames.AdminProductNews, NEDRoutes.New].join('/'),
 
-	AdminProduct__: ['/Admin', ProtectRouteNames.AdminProduct__].join('/'),
-	AdminProductDetail__: ['/Admin', ProtectRouteNames.AdminProductDetail__, NEDRoutes.Detail].join('/'),
-	AdminProductNews__: ['/Admin', ProtectRouteNames.AdminProductNews__, NEDRoutes.New].join('/'),
-
-	Login: ['', ProtectRouteNames.Login].join('/'),
-
+	AdminSaleInfo: ['/Admin', ProtectRouteNames.AdminSaleInfo].join('/'),
+	AdminSaleInfoDetail: ['/Admin', ProtectRouteNames.AdminSaleInfoDetail, NEDRoutes.Detail].join('/'),
+	AdminSaleInfoNews: ['/Admin', ProtectRouteNames.AdminSaleInfoNews, NEDRoutes.New].join('/'),
 }
 
 // thông tin cần thiết để hiển thị 1 view admin
 export const ProtectRoutes = {
-	// Login: {
-	// 	exact: true,
-	// 	id: ProtectRouteNames.Login,
-	// 	label: "Đăng nhập",
-	// 	path: ProtectPaths.Login,
-	// 	component: PageLogin,
-	// },
 	Dashboard: {
 		exact: true,
 		id: ProtectRouteNames.Dashboard,
 		label: "Trang quản trị",
 		path: ProtectPaths.Dashboard,
 		component: DashboardPage,
+		icon: HomeIcon,
+		drawer: true,
+	},
+	// routes manager user view admin
+	AdminUserManagement: {
+		exact: true,
+		id: ProtectRouteNames.AdminUserManagement,
+		label: "Quản lý người dùng",
+		path: ProtectPaths.AdminUserManagement,
+		component: PageAdminUserManagement,
+		icon: HomeIcon,
+		drawer: true,
+	},
+	AdminUserManagementDetail: {
+		exact: true,
+		id: ProtectRouteNames.AdminUserManagementDetail,
+		label: "Thông tin người dùng",
+		path: ProtectPaths.AdminUserManagementDetail,
+		component: PageAdminUserManagementDetail,
+		icon: HomeIcon
+	},
+	AdminUserManagementNews: {
+		exact: true,
+		id: ProtectRouteNames.AdminUserManagementNews,
+		label: "Tạo mới người dùng",
+		path: ProtectPaths.AdminUserManagementNews,
+		component: PageAdminUserManagementDetail,
 		icon: HomeIcon
 	},
 	// routes product view admin
@@ -83,7 +99,8 @@ export const ProtectRoutes = {
 		label: "Quản lý sản phẩm",
 		path: ProtectPaths.AdminProduct,
 		component: PageAdminProduct,
-		icon: HomeIcon
+		icon: HomeIcon,
+		drawer: true,
 	},
 	AdminProductDetail: {
 		exact: true,
@@ -108,7 +125,8 @@ export const ProtectRoutes = {
 	// 	label: "Quản lý bài viết",
 	// 	path: ProtectPaths.AdminSaleInfo,
 	// 	component: PageAdminSaleInfo,
-	// 	icon: HomeIcon
+	// 	icon: HomeIcon,
+	// drawer: true,
 	// },
 	AdminSaleInfoDetail: {
 		exact: true,

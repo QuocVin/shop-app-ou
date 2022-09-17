@@ -16,58 +16,56 @@ import { useStore } from "react-redux";
 import cookies from 'react-cookies';
 import API, { endpoints } from '../../helpers/API';
 import { getAuthLS, LS_KEY } from '../../helpers/localStorage';
-
-const rolePaths = {
-	EMPLOYEE: 'NHAN VIEN',
-	ADMIN: 'QUAN LY',
-	GUEST: 'NGUOI DUNG',
-}
+import { rolePaths } from '../../helpers/utils';
 
 export default function ({ classes, open }) {
 	const check = getAuthLS(LS_KEY.AUTH_TOKEN)
-	// const check = 'QUAN LY';
 	const loggedIn = getAuthLS(LS_KEY.AUTH_TOKEN) ? true : false;
 	let checkAuth = false;
 
 	const history = useHistory();
 
 	// xử lý hiện các mục tại thanh drawer
-	const setRoute = (loggedIn, check) => {
-		if (loggedIn) {
-			// if (check === rolePaths.EMPLOYEE) {
-			//     checkAuth = true;
-			//     return (
-			//         Object.values(EmpRoutesDrawer)
-			//     );
-			// }
-			// if (check === rolePaths.ADMIN) {
-			//     checkAuth = true;
-			//     return (
-			//         Object.values(ProtectRoutesDrawer)
-			//     );
-			// }
-			// if (check === rolePaths.GUEST) {
-			//     checkAuth = false;
-			//     return (
-			//         Object.values([])
-			//     );
-			// }
-		}
-		else {
-			checkAuth = false;
-			return (
-				Object.values([])
-			);
-		}
+	const getDrawer = (loggedIn, check) => {
+		// if (loggedIn) {
+		// 	// if (check === rolePaths.EMPLOYEE) {
+		// 	//     checkAuth = true;
+		// 	//     return (
+		// 	//         Object.values(EmpRoutesDrawer)
+		// 	//     );
+		// 	// }
+		// 	// if (check === rolePaths.ADMIN) {
+		// 	//     checkAuth = true;
+		// 	//     return (
+		// 	//         Object.values(ProtectRoutesDrawer)
+		// 	//     );
+		// 	// }
+		// 	// if (check === rolePaths.GUEST) {
+		// 	//     checkAuth = false;
+		// 	//     return (
+		// 	//         Object.values([])
+		// 	//     );
+		// 	// }
+		// }
+		// else {
+		// 	// checkAuth = false;
+		// 	// return (
+		// 	// 	Object.values(ProtectRoutes)
+		// 	// );
+		// 	let tempRoute = Object.values(ProtectRoutes);
+		// 	let tempArrDrawer = tempRoute.filter((d) => d.drawer === true)
+		// 	return tempArrDrawer;
+		// }
+		let tempRoute = Object.values(ProtectRoutes);
+		let tempArrDrawer = tempRoute.filter((d) => d.drawer === true)
+		return tempArrDrawer;
 	}
-
-	// const [childDrawer, setChildDrawer] = React.useState(
-	// 	// Object.values(ProtectRoutesDrawer)
-	// 	// setRoute(loggedIn, check)
-	// );
-
-	const [childDrawer, setChildDrawer] = React.useState([]);
-
+	const [childDrawer, setChildDrawer] = React.useState(
+		getDrawer(loggedIn, check)
+	);
+	const temp = Object.values(ProtectRoutes)
+	// const [childDrawer, setChildDrawer] = React.useState(temp);
+	// console.info(temp)
 	const store = useStore();
 	const auth = store.getState();
 	let user = auth;
@@ -115,7 +113,7 @@ export default function ({ classes, open }) {
 		>
 			<Toolbar />
 			<div className={classes.drawerContainer}>
-				{checkAuth ? (
+				{/* {checkAuth ? (
 					<div>
 						<Avatar alt={user.username} className={classes.avatar} onClick={() => handleGoProfile(check, user.id)}
 							src={user.avatar.includes('http://127.0.0.1:8000') ? user.avatar : `http://127.0.0.1:8000${user.avatar}`} />
@@ -125,7 +123,7 @@ export default function ({ classes, open }) {
 					</div>
 				) : (
 					<div></div>
-				)}
+				)} */}
 
 				<List>
 					{childDrawer.map((route, idx) => {

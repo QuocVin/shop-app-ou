@@ -4,6 +4,9 @@ export let endpoints = {
 	'login': '/api/authenticate',
 	'register': '/api/users/createUser',
 
+	'admin/user': (params, page) => '/api/users/getPages' + `?page=${page || 1}` + params,
+	'admin/user/id': (params) => '/api/users/detail' + `?user_id=${params}`,
+
 	'admin/product': (params, page) => '/api/products/getPageProducts' + `?page=${page || 1}` + params,
 	'admin/product/id': (params) => '/api/products/detail' + `?product_id=${params}`,
 	'admin/update-product': '/api/products/update',

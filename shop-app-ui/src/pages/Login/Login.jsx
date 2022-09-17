@@ -63,8 +63,8 @@ export default function Login() {
 			} else {
 				cookies.save("access_token", res.data.result.auth.access_token)
 				signInSucess(res.data.result.profile.role_name);
-				console.info(res)
-				cookies.save("user", res.data.result.profile.username);
+				console.info(res);
+				cookies.save('user', res.data.result.profile);
 				history.push(ProtectPaths.AdminProduct);
 				// dispatch({
 				// 	"type": "login",

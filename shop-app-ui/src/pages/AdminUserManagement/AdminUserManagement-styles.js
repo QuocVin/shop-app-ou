@@ -1,29 +1,26 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-  input: {
-    display: 'none',
-  },
+	AdminUserManagement: {
+		padding: '80px',
+		'& .box-search': {
+			display: 'flex',
+			flexDirection: 'row',
+			alignItems: 'center'
+		},
+		'& .box-table': {
+			width: 'fit-content'
+		},
+		'& .btn-role': {
+			height: '45px',
+			width: '130px',
+			padding: 0,
+			color: '#FFF',
+			backgroundColor: '#0081ff',
+			marginRight: '15px'
+		},
+		'& .app-search': {
+			flexGrow: 1
+		}
+	}
 }));

@@ -49,7 +49,6 @@ export default function AdminProduct() {
 	const classes = useStyles();
 	const history = useHistory();
 	const [loading, setLoading] = useState(false);
-	const [title, setTitle] = useState('');
 
 	const [productList, setProductList] = useState([]);
 	const { control, setValue, getValues } = useForm();

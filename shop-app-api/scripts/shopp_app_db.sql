@@ -16,7 +16,7 @@ create table [dbo].[users](
 	[password]				[nvarchar](max) not null,
 	[name]					[nvarchar](50) not null,
 	[date_ob]				[datetime] null,
-	[gen]					[nvarchar](50) null,
+	[gen]					[nvarchar](1) null,
 	[phone]					[nvarchar](10) null,
 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
 	[status_acc]			[nvarchar](20 )default 'active' null,
@@ -38,13 +38,13 @@ create table [dbo].[users](
 insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note)
 --output inserted.*
 values('admin','123456','nguyễn văn q', 1990-10-14, 'm', '1234567890', '1', 'active','admin', 2022-20-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('quanly1','123456','nguyễn văn a', 1991-10-14, 'm', '1234567890', '1', 'active', 'manager', 2022-21-03,'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('quanly2','123456','nguyễn văn b', 1992-10-14, 'f', '1234567890', '1', 'active', 'manager', 2022-22-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung1','123456','nguyễn văn c', 1993-10-14, 'm', '1234567890', '1', 'active', 'register', 2022-23-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung2','123456','nguyễn văn e', 1994-10-14, 'f', '1234567890', '1', 'active', 'register', 2022-23-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung3','123456','nguyễn văn f', 1995-10-14, 'f', '1234567890', '1', 'active', 'register', 2022-24-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung4','123456','nguyễn văn g', 1996-10-14, 'm', '1234567890', '1', 'active', 'register', 2022-25-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung5','123456','nguyễn văn h', 1997-10-14, 'm', '1234567890', '1', 'active', 'register', 2022-25-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('quanly1','1','nguyễn văn a', 1991-10-14, 'm', '1234567890', '1', 'active', 'manager', 2022-21-03,'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('quanly2','1','nguyễn văn b', 1992-10-14, 'f', '1234567890', '1', 'active', 'manager', 2022-22-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung1','1','nguyễn văn c', 1993-10-14, 'm', '1234567890', '1', 'active', 'register', 2022-23-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung2','1','nguyễn văn e', 1994-10-14, 'f', '1234567890', '1', 'active', 'register', 2022-23-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung3','1','nguyễn văn f', 1995-10-14, 'f', '1234567890', '1', 'active', 'register', 2022-24-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung4','1','nguyễn văn g', 1996-10-14, 'm', '1234567890', '1', 'active', 'register', 2022-25-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [users](username,password,name,date_ob,gen,phone,validationflag,status_acc,role_name,created_date,created_by,created_note,update_date,update_by,update_note) values('nguoidung5','1','nguyễn văn h', 1997-10-14, 'm', '1234567890', '1', 'active', 'register', 2022-25-03, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
 
 
 -- token đăng nhập
