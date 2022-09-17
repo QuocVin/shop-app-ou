@@ -41,7 +41,7 @@ export default function ({ classes, open, setOpen, mainRef }) {
 					</IconButton>
 
 					<Button>
-						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleLogin_click('/Admin/AdminProduct')}>
+						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/Admin/AdminProduct')}>
 							MANAGE SHOP
 						</Typography>
 					</Button>
@@ -51,7 +51,7 @@ export default function ({ classes, open, setOpen, mainRef }) {
 			return (
 				<div className="block-left">
 					<Button>
-						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleLogin_click('/')}>
+						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/')}>
 							SHOP APP
 						</Typography>
 					</Button>
@@ -74,7 +74,7 @@ export default function ({ classes, open, setOpen, mainRef }) {
 	};
 
 	// chuyển trang khi chọn đăng nhập
-	const handleLogin_click = (path) => {
+	const handleClick = (path) => {
 		history.push(path);
 	}
 	let userComponet = useMemo(() => {
@@ -90,8 +90,8 @@ export default function ({ classes, open, setOpen, mainRef }) {
 		} else {
 			return (
 				<>
-					<Button onClick={() => handleLogin_click('/Login')} > <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng nhập</Typography> </Button>
-					<Button onClick={() => handleLogin_click('/Register')} > <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng Ký</Typography> </Button>
+					<Button onClick={() => handleClick('/Login')} > <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng nhập</Typography> </Button>
+					<Button onClick={() => handleClick('/Register')} > <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng Ký</Typography> </Button>
 				</>
 			)
 		}

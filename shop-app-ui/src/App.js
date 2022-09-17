@@ -24,9 +24,10 @@ function App() {
 	};
 
 	function AdminLayout(props) {
+		let tempRoutes = Object.assign(ProtectRoutes, PublicRoutes)
 		return (
 			<Layout {...props}>
-				{Object.values(ProtectRoutes).map((route, idx) => {
+				{Object.values(tempRoutes).map((route, idx) => {
 					return (
 						<Route
 							key={`${idx}-protect`}
@@ -36,8 +37,7 @@ function App() {
 						/>
 					);
 				})}
-				<Redirect strict from="*" to={ProtectPaths.AdminProduct} />
-				{/* <Redirect to={ProtectPaths.AdminProduct} /> */}
+				<Redirect strict from="*" to="/" />
 			</Layout>
 		);
 	}

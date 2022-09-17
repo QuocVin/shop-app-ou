@@ -20,7 +20,7 @@ export const PublicRouteNames = {
 export const PublicPaths = {
 	Login: ['', PublicRouteNames.Login].join('/'),
 	Register: ['', PublicRouteNames.Register].join('/'),
-	Home: '',
+	Home: '/',
 }
 
 // thông tin cần thiết để hiển thị 1 view
