@@ -172,8 +172,7 @@ export default function AdminUserManagementDetail() {
 
 	// chọn button quay về
 	const handleGoBack = () => {
-		// history.push(ProtectRoutes.AdminUserManagement.path);
-		console.info(getValues())
+		history.push(ProtectRoutes.AdminUserManagement.path);
 	};
 
 	// xử lý sự kiện đóng thông báo, cật nhật thành công thì reload trang sau khi đóng thông báo
@@ -186,7 +185,7 @@ export default function AdminUserManagementDetail() {
 		}
 	};
 
-	function AAA(date) {
+	function testFun(date) {
 		setValue('date_ob', date)
 		setDatePicker(date)
 	}
@@ -200,7 +199,7 @@ export default function AdminUserManagementDetail() {
 
 			{/* tìm kiếm */}
 			<AppForm
-				fields={formFields(AAA, datePicker)}
+				fields={formFields(testFun, datePicker)}
 				control={control}
 				onGoBack={handleGoBack}
 				onGoSubmit={formType === 'insert' ? createNewUser : updateInfoUser}

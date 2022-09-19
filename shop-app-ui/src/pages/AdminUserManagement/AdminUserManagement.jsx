@@ -26,6 +26,8 @@ export default function AdminUserManagement() {
 	const [userRole, setUserRole] = useState(rolePaths.CUSTOMER);
 	const [userList, setUserList] = useState([]);
 	const { control, setValue, getValues } = useForm();
+	const [openAlert, setOpenAlert] = React.useState(false);
+	const [alertInfo, setAlertInfo] = React.useState(false);
 
 	useEffect(() => {
 		async function init() {
@@ -73,6 +75,48 @@ export default function AdminUserManagement() {
 		await fetchUsers(`&role_name=${role}`);
 	}
 
+	// xóa người dùng
+	const handleDeleteUser = async (rowData) => {
+		const formData = {
+			user_id: rowData.user_id
+		}
+		// const formData = getValues();
+		// setValue
+		// formData.user_id = rowData.user_id
+		try {
+			let res = await API.post(endpoints['admin/delete-user'],
+				JSON.stringify(formData),
+				{
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				});
+			if (res.data.error) {
+				setAlertInfo({
+					typeAlert: { warning: true },
+					label: 'Lỗi, bạn vui lòng kiểm tra lại!',
+				})
+				setOpenAlert(true);
+			} else {
+				setAlertInfo({
+					typeAlert: { success: true },
+					label: 'Xóa người dùng thành công!!!'
+				})
+				setOpenAlert(true);
+				setTimeout(() => {
+					window.location.reload();
+				}, 1500);
+			}
+		} catch (err) {
+			console.log("ERROR:\n", err);
+			setOpenAlert(true);
+			setAlertInfo({
+				typeAlert: { error: true },
+				label: 'Lỗi hệ thống, bạn vui lòng kiểm tra lại kết nối!'
+			})
+		}
+	}
+
 	return (
 		<Box className={classes.AdminUserManagement}>
 			<Box>
@@ -89,7 +133,7 @@ export default function AdminUserManagement() {
 
 				{/* danh sách người dùng */}
 				{loading ? <p>Loading ...</p> :
-					<AppTable columns={AdminUserManagementColumns} data={userList} paramsChoose={paramToDetail} />
+					<AppTable columns={AdminUserManagementColumns} data={userList} paramsChoose={paramToDetail} handleDelete={handleDeleteUser} />
 				}
 			</Box>
 

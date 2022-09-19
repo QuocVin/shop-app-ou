@@ -84,11 +84,19 @@ export default function AppInput({ field = {}, control, className = '', componen
 				name={field.id}
 				defaultValue=""
 				render={({ field: { onChange, value } }) => {
+					const _more = {};
+					if (field?.required) {
+						_more.required = true;
+					}
 					return (
 						<FormControl component="fieldset" className={[classes.marginLeft, classes.boxInput].join(' ')}>
-							<RadioGroup className={classes.row} aria-label="gender" name="gender1" value={value} onChange={onChange}>
+							<RadioGroup className={classes.row} aria-label="gender" name="gender1"
+								value={value}
+								onChange={onChange}
+
+							>
 								{options.map((op, idx) => (
-									<FormControlLabel key={idx + 'item-radio-' + op.id} value={op.id} control={<Radio color="primary" />} label={op.label} />
+									<FormControlLabel key={idx + 'item-radio-' + op.id} value={op.id} control={<Radio color="primary" {..._more} />} label={op.label} />
 								))}
 							</RadioGroup>
 						</FormControl>)
@@ -100,6 +108,10 @@ export default function AppInput({ field = {}, control, className = '', componen
 					name={field.id}
 					defaultValue={false}
 					render={({ field: { onChange, value } }) => {
+						const _more = {};
+						if (field?.required) {
+							_more.required = true;
+						}
 						return (
 							<FormControl component="fieldset" className={[classes.boxInput].join(' ')}>
 								{/* <InputLabel htmlFor="demo-customized-select-native">Age</InputLabel> */}
@@ -110,6 +122,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 									value={value || ''}
 									onChange={onChange}
 									input={<BootstrapInput />}
+									{..._more}
 								>
 									{options.map((op, idx) => (
 										<MenuItem value={op[field.id]} key={idx + 'item-select-box' + op.id}>{op.name}</MenuItem>
@@ -180,6 +193,10 @@ export default function AppInput({ field = {}, control, className = '', componen
 					name={field.id}
 					defaultValue={null}
 					render={({ field: onChange, value }) => {
+						const _more = {};
+						if (field?.required) {
+							_more.required = true;
+						}
 						return (
 							<div className={classes.appDatePicker} >
 								<MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -200,6 +217,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 										KeyboardButtonProps={{
 											'aria-label': 'change date',
 										}}
+										{..._more}
 									/>
 								</MuiPickersUtilsProvider>
 							</div>

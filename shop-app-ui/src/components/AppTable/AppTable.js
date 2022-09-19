@@ -36,6 +36,7 @@ export default function AppTable({
 	isBtn = true,
 	fillCategory = [],
 	paramsChoose = {},
+	handleDelete = () => { }
 }) {
 	const classes = useStyles();
 	const history = useHistory();
@@ -43,7 +44,6 @@ export default function AppTable({
 	// chuyển trang
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
-	// const [rowsPerPage, setRowsPerPage] = useState(3);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -151,7 +151,7 @@ export default function AppTable({
 											width: 100
 										}}
 									>
-										<Button fullWidth>
+										<Button fullWidth onClick={() => handleDelete(row)}>
 											<DeleteIcon />
 										</Button>
 									</StyledTableCell> : <></>}

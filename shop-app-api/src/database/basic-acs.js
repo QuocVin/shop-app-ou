@@ -111,13 +111,14 @@ exports.update = async (tableName, params) => {
 	}
 };
 
-exports.remove = async (tableName, { id }, t) => {
+exports.remove = async (tableName, id, t) => {
 	try {
 		const sql = sqlStr.genSqlDelete({
 			tableName,
 			id,
 		});
-		await db.query(sql, { type: QueryTypes.DELETE, transaction: t });
+		// await db.query(sql, { type: QueryTypes.DELETE, transaction: t });
+		await db.query(sql, { type: QueryTypes.DELETE });
 
 		return createResult({ id });
 	} catch (ex) {

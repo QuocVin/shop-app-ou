@@ -17,10 +17,16 @@ exports.genSqlPage = ({ tableName, offset, limit, where }) => {
     SELECT *
     FROM [${tableName}]
     ${whereCmd}
-    ORDER BY update_date, name
-    OFFSET ${offset} ROWS
-    FETCH NEXT ${limit} ROWS ONLY;
+    ORDER BY update_date desc, name;
   `;
+  // return `
+  //   SELECT *
+  //   FROM [${tableName}]
+  //   ${whereCmd}
+  //   ORDER BY update_date, name
+  //   OFFSET ${offset} ROWS
+  //   FETCH NEXT ${limit} ROWS ONLY;
+  // `;
 };
 
 exports.genSqlDetail = ({ tableName, where }) => {
@@ -62,8 +68,9 @@ exports.genSqlUpdate = ({ tableName, row }) => {
 };
 
 exports.genSqlDelete = ({ tableName, id }) => {
+  const key_id = tableName.slice(0, -1) + '_id';
   return `
     DELETE FROM ${tableName}
-    WHERE id='${id}'
+    WHERE ${key_id}=${id[key_id] - 0}
   `;
 };
