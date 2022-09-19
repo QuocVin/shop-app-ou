@@ -16,14 +16,14 @@ import {
 } from '../../components';
 import { ProtectRoutes } from '../../routes/protect-route';
 import { AdminUserManagementColumns, formSearch } from "./AdminUserManagement-const"
-import moment from "moment";
 import { useForm, Controller } from "react-hook-form";
+import { rolePaths } from '../../helpers/utils'
 
 export default function AdminUserManagement() {
 	const classes = useStyles();
 	const history = useHistory();
 	const [loading, setLoading] = useState(false);
-	const [userRole, setUserRole] = useState('register');
+	const [userRole, setUserRole] = useState(rolePaths.CUSTOMER);
 	const [userList, setUserList] = useState([]);
 	const { control, setValue, getValues } = useForm();
 
@@ -37,6 +37,9 @@ export default function AdminUserManagement() {
 	// lấy danh sách product
 	const fetchUsers = async (params = '') => {
 		let page = 2;
+		if (!params.includes('&role_name=')) {
+			params += `&role_name=${userRole}`;
+		}
 		const _path = endpoints['admin/user'](params)
 		// const _path = endpoints['admin/product'](params, page)
 		API.get(_path).then(res => {
@@ -64,13 +67,16 @@ export default function AdminUserManagement() {
 
 	const handleSearchUserByRole = async (role) => {
 		setUserRole(role);
-		await fetchUsers(`&role_name=${role}`)
+		for (let key in getValues()) {
+			setValue(key, '')
+		}
+		await fetchUsers(`&role_name=${role}`);
 	}
 
 	return (
 		<Box className={classes.AdminUserManagement}>
 			<Box>
-				<Typography variant="h2">{userRole === 'manager' ? 'Quản lý nhân viên' : 'Quản lý người dùng'}</Typography>
+				<Typography variant="h3">{userRole === 'manager' ? 'Quản lý nhân viên' : 'Quản lý người dùng'}</Typography>
 			</Box>
 			<Box className='box-table'>
 				<Box className='box-search'>

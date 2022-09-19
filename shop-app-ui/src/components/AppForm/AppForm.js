@@ -78,6 +78,11 @@ export default function AppForm({
 								<AppInput field={field} control={control} component={field.component} />
 							</Grid>
 						)
+						|| field.component?.datePicker && (
+							<Grid item xs={_xs} key={idx + '-form-grip'}>
+								<AppInput field={field} control={control} component={field.component} />
+							</Grid>
+						)
 				})}
 				<RenderBoxBtn formType={formType} />
 			</Grid>

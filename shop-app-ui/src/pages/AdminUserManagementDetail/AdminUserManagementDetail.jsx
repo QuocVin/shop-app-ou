@@ -22,6 +22,7 @@ import {
 } from '../../components';
 import { useForm, Controller } from "react-hook-form";
 import { userKey, formFields } from "./AdminUserManagementDetail-const";
+import cookies from 'react-cookies';
 
 export default function AdminUserManagementDetail() {
 	const classes = useStyles();
@@ -30,17 +31,19 @@ export default function AdminUserManagementDetail() {
 	const [userInfo, setUserInfo] = useState({})
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [alertInfo, setAlertInfo] = React.useState(false);
-	const [formType, setFormType] = useState('')
+	const [formType, setFormType] = useState('');
+	const [datePicker, setDatePicker] = useState(new Date());
+
+	let user = cookies.load("user");
 
 	const viewPath = useLocation().pathname.split('/');
 	const userId = viewPath[viewPath.length - 1]
-	const { control, setValue, getValues } = useForm();
+	const { control, setValue, getValues } = useForm({});
 
 	// liên quan đến lifecycle của reactjs, được gọi khi component có sự thay đổi
 	// chỉ gọi 1 lần duy nhất
 	useEffect(() => {
 		async function init() {
-			setLoading(true)
 			if (userId === 'new') {
 				setFormType('insert')
 			} else {
@@ -56,15 +59,12 @@ export default function AdminUserManagementDetail() {
 		getDataToForm();
 	}, [userInfo])
 
-	// lấy thông tin sản phẩm từ data truyền vào form
+	// lấy thông tin người dùng từ data truyền vào form
 	const getDataToForm = () => {
-		// for (const key in userInfo) {
-		// 	setValue(key, userInfo[`${key}`])
-		// }
 		userKey.map((p) => setValue(p, userInfo[p]))
 	}
 
-	// thực hiện câu truy vấn lên server lấy thông tin sản phẩm
+	// thực hiện câu truy vấn lên server lấy thông tin người dùng
 	const fetchDataUser = async (params) => {
 		setTimeout(() => {
 			const _path = endpoints['admin/user/id'](params)
@@ -75,12 +75,12 @@ export default function AdminUserManagementDetail() {
 		}, 500);
 	}
 
-	// update thông tin sản phẩm
-	const updateInfoProduct = async (event) => {
+	// update thông tin người dùng
+	const updateInfoUser = async (event) => {
 		const formData = Object.assign({}, getValues())
 		const formInfo = {
 			formType: formType,
-			auth: 'admin',
+			auth: user.username,
 			note: 'AdminUserManagementDetail',
 		}
 		infoRequest(formData, formInfo);
@@ -88,7 +88,7 @@ export default function AdminUserManagementDetail() {
 			if (event) {
 				event.preventDefault();
 			}
-			let res = await API.put(endpoints['admin/update-product'],
+			let res = await API.put(endpoints['admin/update-user'],
 				JSON.stringify(formData),
 				{
 					headers: {
@@ -105,7 +105,7 @@ export default function AdminUserManagementDetail() {
 			} else {
 				setAlertInfo({
 					typeAlert: { success: true },
-					label: 'Cập nhật thông tin sản phẩm thành công!!!'
+					label: 'Cập nhật thông tin người dùng thành công!!!'
 				})
 				setOpenAlert(true);
 				setTimeout(() => {
@@ -122,27 +122,28 @@ export default function AdminUserManagementDetail() {
 		}
 	}
 
-	// tạo mới sản phẩm
-	const createNewProduct = async (event) => {
+	// tạo mới người dùng
+	const createNewUser = async (event) => {
 		const formData = Object.assign({}, getValues());
 		const formInfo = {
 			formType: formType,
-			auth: 'admin',
+			auth: user.username,
 			note: 'AdminUserManagementNew',
 		}
 		infoRequest(formData, formInfo);
+		formData.status_acc = 'active';
+		formData.validationflag = '1';
 		try {
 			if (event) {
 				event.preventDefault();
 			}
-			let res = await API.post(endpoints['admin/create-new-product'],
+			let res = await API.post(endpoints['admin/create-new-user'],
 				JSON.stringify(formData),
 				{
 					headers: {
 						'Content-type': 'application/json; charset=UTF-8',
 					},
 				});
-			console.info("res:", res)
 			if (res.data.error) {
 				setAlertInfo({
 					typeAlert: { warning: true },
@@ -152,7 +153,7 @@ export default function AdminUserManagementDetail() {
 			} else {
 				setAlertInfo({
 					typeAlert: { success: true },
-					label: 'Tạo mới sản phẩm thành công!!!'
+					label: 'Tạo mới người dùng thành công!!!'
 				})
 				setOpenAlert(true);
 				setTimeout(() => {
@@ -171,7 +172,8 @@ export default function AdminUserManagementDetail() {
 
 	// chọn button quay về
 	const handleGoBack = () => {
-		history.push(ProtectRoutes.AdminUserManagement.path);
+		// history.push(ProtectRoutes.AdminUserManagement.path);
+		console.info(getValues())
 	};
 
 	// xử lý sự kiện đóng thông báo, cật nhật thành công thì reload trang sau khi đóng thông báo
@@ -184,19 +186,24 @@ export default function AdminUserManagementDetail() {
 		}
 	};
 
+	function AAA(date) {
+		setValue('date_ob', date)
+		setDatePicker(date)
+	}
+
 	return (
 		<Container className={classes.AdminUserManagementDetail}>
 			<Box>
-				{userId === 'new' ? <Typography variant="h4" className='title-product'>Sản phẩm mới</Typography>
+				{userId === 'new' ? <Typography variant="h4" className='title-product'>Người dùng mới</Typography>
 					: <Typography variant="h4" className='title-product'>{ProtectRoutes.AdminUserManagementDetail.label}: {userInfo?.name}</Typography>}
 			</Box>
 
 			{/* tìm kiếm */}
 			<AppForm
-				fields={formFields()}
+				fields={formFields(AAA, datePicker)}
 				control={control}
 				onGoBack={handleGoBack}
-				onGoSubmit={formType === 'insert' ? createNewProduct : updateInfoProduct}
+				onGoSubmit={formType === 'insert' ? createNewUser : updateInfoUser}
 				formType={formType}
 			/>
 

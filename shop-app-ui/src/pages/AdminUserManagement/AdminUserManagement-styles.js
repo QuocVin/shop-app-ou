@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
 	AdminUserManagement: {
-		padding: '80px',
+		padding: '20px 30px',
 		'& .box-search': {
 			display: 'flex',
 			flexDirection: 'row',

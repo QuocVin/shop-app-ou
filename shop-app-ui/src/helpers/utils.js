@@ -19,3 +19,8 @@ export const rolePaths = {
 	EMPLOYEE: 'manager',
 	ADMIN: 'admin',
 }
+
+export const optionsGen = [
+	{ id: 'm', label: 'Nam' },
+	{ id: 'f', label: 'Nữ' },
+]

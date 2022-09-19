@@ -45,7 +45,7 @@ export default function Register() {
 		const formData = Object.assign({}, getValues())
 		const formInfo = {
 			formType: 'insert',
-			auth: formData.name,
+			auth: formData.username,
 			note: 'Register',
 		}
 		infoRequest(formData, formInfo);

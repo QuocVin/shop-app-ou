@@ -5,6 +5,13 @@ import {
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useStyles } from './AppInput.styles';
 import { useForm, Controller } from "react-hook-form";
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+	MuiPickersUtilsProvider,
+	KeyboardTimePicker,
+	KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const BootstrapInput = withStyles((theme) => ({
 	root: {
@@ -45,7 +52,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 export default function AppInput({ field = {}, control, className = '', component = {}, options = [] }) {
 	const classes = useStyles();
-	const { radio, selectBox, checkbox, textField } = component;
+	const { radio, selectBox, checkbox, textField, datePicker } = component;
 
 	const RenderLabel = ({ label = '', labelClass }) => {
 		const arrClasses = [];
@@ -63,7 +70,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 		)
 	}
 
-	const RenderInput = (component = { radio: false, selectBox: false, checkbox: false, textField: false }) => {
+	const RenderInput = (component = { radio: false, selectBox: false, checkbox: false, textField: false, datePicker: false }) => {
 		// tham khảo cách này
 		// const elm = {
 		//     radio: <></>,
@@ -94,7 +101,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 					defaultValue={false}
 					render={({ field: { onChange, value } }) => {
 						return (
-							<FormControl component="fieldset" className={[classes.marginLeft, classes.boxInput].join(' ')}>
+							<FormControl component="fieldset" className={[classes.boxInput].join(' ')}>
 								{/* <InputLabel htmlFor="demo-customized-select-native">Age</InputLabel> */}
 								<Select
 									disabled={field?.disabled || false}
@@ -163,6 +170,39 @@ export default function AppInput({ field = {}, control, className = '', componen
 									{..._more}
 								/>
 							</FormControl>
+						)
+					}}
+				/>
+			)
+			|| datePicker && (
+				<Controller
+					control={control}
+					name={field.id}
+					defaultValue={null}
+					render={({ field: onChange, value }) => {
+						return (
+							<div className={classes.appDatePicker} >
+								<MuiPickersUtilsProvider utils={DateFnsUtils}>
+									<KeyboardDatePicker
+										disableToolbar
+										variant="inline"
+										inputVariant="outlined"
+										orientation="landscape"
+										format="dd/MM/yyyy"
+										margin="normal"
+										id={field.id}
+										label=""
+										// value={field.value}
+										// onChange={field.onChangeDatePicker}
+										value={onChange.value}
+										onChange={onChange.onChange}
+										control={control}
+										KeyboardButtonProps={{
+											'aria-label': 'change date',
+										}}
+									/>
+								</MuiPickersUtilsProvider>
+							</div>
 						)
 					}}
 				/>

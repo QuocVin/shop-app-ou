@@ -6,6 +6,8 @@ export let endpoints = {
 
 	'admin/user': (params, page) => '/api/users/getPages' + `?page=${page || 1}` + params,
 	'admin/user/id': (params) => '/api/users/detail' + `?user_id=${params}`,
+	'admin/update-user': '/api/users/update',
+	'admin/create-new-user': '/api/users/insert',
 
 	'admin/product': (params, page) => '/api/products/getPageProducts' + `?page=${page || 1}` + params,
 	'admin/product/id': (params) => '/api/products/detail' + `?product_id=${params}`,

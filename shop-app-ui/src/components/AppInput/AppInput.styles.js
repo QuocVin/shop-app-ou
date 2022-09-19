@@ -10,6 +10,9 @@ export const useStyles = makeStyles((theme) => ({
 	labelSpace: {
 		width: '170px'
 	},
+	marginLeft: {
+		marginLeft: '10px'
+	},
 	labelBorder: {
 		padding: "15px 10px",
 		borderTopLeftRadius: "5px",
@@ -33,4 +36,13 @@ export const useStyles = makeStyles((theme) => ({
 			borderBottomLeftRadius: 0,
 		}
 	},
+	appDatePicker: {
+		'& .MuiFormControl-marginNormal': {
+			margin: 0,
+			'& .MuiOutlinedInput-root': {
+				borderTopLeftRadius: 0,
+				borderBottomLeftRadius: 0,
+			}
+		}
+	}
 }));
