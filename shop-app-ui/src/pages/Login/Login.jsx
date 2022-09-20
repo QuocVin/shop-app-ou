@@ -64,7 +64,7 @@ export default function Login() {
 				cookies.save("access_token", res.data.result.auth.access_token)
 				signInSucess(res.data.result.profile.role_name);
 				cookies.save('user', res.data.result.profile);
-				// history.push('/');
+				history.push('/');
 				window.location.reload()
 			}
 		} catch (err) {

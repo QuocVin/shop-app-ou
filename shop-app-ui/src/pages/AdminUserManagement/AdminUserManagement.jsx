@@ -12,7 +12,8 @@ import { useStyles } from './AdminUserManagement-styles';
 import { useHistory } from 'react-router';
 import {
 	AppTable,
-	AppSearch
+	AppSearch,
+	AppAlert,
 } from '../../components';
 import { ProtectRoutes } from '../../routes/protect-route';
 import { AdminUserManagementColumns, formSearch } from "./AdminUserManagement-const"
@@ -80,9 +81,6 @@ export default function AdminUserManagement() {
 		const formData = {
 			user_id: rowData.user_id
 		}
-		// const formData = getValues();
-		// setValue
-		// formData.user_id = rowData.user_id
 		try {
 			let res = await API.post(endpoints['admin/delete-user'],
 				JSON.stringify(formData),
@@ -105,7 +103,7 @@ export default function AdminUserManagement() {
 				setOpenAlert(true);
 				setTimeout(() => {
 					window.location.reload();
-				}, 1500);
+				}, 500);
 			}
 		} catch (err) {
 			console.log("ERROR:\n", err);
@@ -116,6 +114,16 @@ export default function AdminUserManagement() {
 			})
 		}
 	}
+
+	// xử lý sự kiện đóng thông báo, cật nhật thành công thì reload trang sau khi đóng thông báo
+	const handleCloseAlert = (event, reason) => {
+		if (reason === 'clickaway') {
+			setOpenAlert(false);
+			if (alertInfo.typeAlert.success) {
+				window.location.reload();
+			}
+		}
+	};
 
 	return (
 		<Box className={classes.AdminUserManagement}>
@@ -136,8 +144,7 @@ export default function AdminUserManagement() {
 					<AppTable columns={AdminUserManagementColumns} data={userList} paramsChoose={paramToDetail} handleDelete={handleDeleteUser} />
 				}
 			</Box>
-
-
+			<AppAlert open={openAlert} handleClose={handleCloseAlert} typeAlert={alertInfo?.typeAlert} label={alertInfo?.label} />
 		</Box>
 	);
 }

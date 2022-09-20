@@ -8,7 +8,7 @@ import PageAdminUserManagementDetail from "../pages/AdminUserManagementDetail";
 import PageAdminProduct from "../pages/AdminProduct";
 import PageAdminProductDetail from "../pages/AdminProductDetail";
 
-// import PageAdminSaleInfo from "../pages/AdminSaleInfo";
+import PageAdminSaleInfo from "../pages/AdminSaleInfo";
 import PageAdminSaleInfoDetail from "../pages/AdminSaleInfoDetail";
 
 // import PageAdminProduct__ from "../pages/AdminProduct__";
@@ -119,15 +119,15 @@ export const ProtectRoutes = {
 		icon: HomeIcon
 	},
 	// routes saleInfo view admin
-	// AdminSaleInfo: {
-	// 	exact: true,
-	// 	id: ProtectRouteNames.AdminSaleInfo,
-	// 	label: "Quản lý bài viết",
-	// 	path: ProtectPaths.AdminSaleInfo,
-	// 	component: PageAdminSaleInfo,
-	// 	icon: HomeIcon,
-	// drawer: true,
-	// },
+	AdminSaleInfo: {
+		exact: true,
+		id: ProtectRouteNames.AdminSaleInfo,
+		label: "Quản lý bài viết",
+		path: ProtectPaths.AdminSaleInfo,
+		component: PageAdminSaleInfo,
+		icon: HomeIcon,
+		drawer: true,
+	},
 	AdminSaleInfoDetail: {
 		exact: true,
 		id: ProtectRouteNames.AdminSaleInfoDetail,

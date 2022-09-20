@@ -14,10 +14,13 @@ export let endpoints = {
 	'admin/product/id': (params) => '/api/products/detail' + `?product_id=${params}`,
 	'admin/update-product': '/api/products/update',
 	'admin/create-new-product': '/api/products/insert',
+	'admin/delete-product': '/api/products/remove',
 
+	'admin/sale-info': (params, page) => '/api/sales_infos/getSaleInfoList' + `?page=${page || 1}` + params,
 	'admin/sale-info/id': (params) => '/api/sales_infos/getSaleInfoById' + `?sales_info_id=${params}`,
 	'admin/update-sale': '/api/sales_infos/update',
 	'admin/create-new-sale': '/api/sales_infos/insert',
+	'admin/delete-sale-info': '/api/sales_infos/remove',
 
 	'admin/category': '/api/categorys/getAll',
 }

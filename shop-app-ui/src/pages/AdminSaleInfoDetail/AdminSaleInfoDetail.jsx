@@ -121,7 +121,7 @@ export default function AdminSaleInfoDetail() {
 				setOpenAlert(true);
 				setTimeout(() => {
 					window.location.reload();
-				}, 1500);
+				}, 500);
 			}
 		} catch (err) {
 			console.log("ERROR:\n", err);
@@ -169,7 +169,7 @@ export default function AdminSaleInfoDetail() {
 				})
 				setOpenAlert(true);
 				setTimeout(() => {
-					history.push(ProtectRoutes.AdminProduct.path);
+					history.push(ProtectRoutes.AdminSaleInfo.path);
 				}, 1500);
 			}
 		} catch (err) {
@@ -184,7 +184,7 @@ export default function AdminSaleInfoDetail() {
 
 	// chọn button quay về
 	const handleGoBack = () => {
-		history.push(ProtectRoutes.AdminProduct.path);
+		history.push(ProtectRoutes.AdminSaleInfo.path);
 	};
 
 	// xử lý sự kiện đóng thông báo, cật nhật thành công thì reload trang sau khi đóng thông báo

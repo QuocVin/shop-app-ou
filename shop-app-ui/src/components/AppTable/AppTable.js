@@ -66,6 +66,10 @@ export default function AppTable({
 			if (data === 'reset_password') return 'Chờ đăng nhập';
 			return 'Hoạt động';
 		}
+		if (formatType === 'validation') {
+			if (data === '1') return 'Hoạt động';
+			return 'Đã ẩn';
+		}
 		return data
 	}
 
