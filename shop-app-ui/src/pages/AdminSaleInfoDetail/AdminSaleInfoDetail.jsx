@@ -21,66 +21,78 @@ import {
 	AppAlert,
 } from '../../components';
 import { useForm, Controller } from "react-hook-form";
-import { productKey, formFields } from "./AdminSaleInfoDetail-const";
+import { saleInfoKey, formFields } from "./AdminSaleInfoDetail-const";
 import { AdminProductColumns } from "./AdminSaleInfoDetail-const"
+import cookies from 'react-cookies';
 
 export default function AdminSaleInfoDetail() {
 	const classes = useStyles();
 	const history = useHistory();
 	const [loading, setLoading] = useState(false)
 	const [productList, setProductList] = useState([]);
-	const [productInfo, setProductInfo] = useState({});
+	const [saleInfo, setSaleInfo] = useState({})
 	const [btnValue, setBtnValue] = useState('Tìm sản phẩm');
 	const [openAlert, setOpenAlert] = React.useState(false);
 	const [alertInfo, setAlertInfo] = React.useState(false);
 	const [formType, setFormType] = useState('')
+	let user = cookies.load("user");
 
 	const viewPath = useLocation().pathname.split('/');
-	const productId = viewPath[viewPath.length - 1]
+	const saleId = viewPath[viewPath.length - 1]
 	const { control, setValue, getValues } = useForm();
 
 	// liên quan đến lifecycle của reactjs, được gọi khi component có sự thay đổi
 	// chỉ gọi 1 lần duy nhất
 	useEffect(() => {
-		// const productId = viewPath[viewPath.length - 1]
 		async function init() {
 			// setLoading(true)
-			if (productId === 'new') {
+			if (saleId === 'new') {
 				setFormType('insert')
 			} else {
+				await fetchDataSale(saleId)
 				setFormType('update')
 			}
 			fetchProducts();
 		}
 		init();
-	}, [])
+	}, []);
 
-	// // chỉ gọi khi products thay đổi
-	// useEffect(() => {
-	// 	getDataToForm();
-	// }, [products])
+	// chỉ gọi khi saleInfo thay đổi
+	useEffect(() => {
+		getDataToForm(formType);
+	}, [saleInfo]);
 
-	// // lấy thông tin bài viết từ data truyền vào form
-	// const getDataToForm = () => {
-	// 	productKey.map((p) => setValue(p, products[p]))
-	// }
+	// lấy thông tin người dùng từ data truyền vào form
+	const getDataToForm = (formType) => {
+		if (formType === 'insert') {
+			saleInfoKey.map((p) => setValue(p, saleInfo[p]))
+		} else {
+			Object.keys(saleInfo).map((k) => setValue(k, saleInfo[k]))
+		}
+	};
 
 	// lấy danh sách product
 	const fetchProducts = async (params = '') => {
-		let page = 2;
 		const _path = endpoints['admin/product'](params)
-		// const _path = endpoints['admin/product'](params, page)
 		API.get(_path).then(res => {
 			setProductList(res.data.result.rows);
 		})
 	}
 
+	// thực hiện câu truy vấn lên server lấy thông tin bài viết
+	const fetchDataSale = async (params) => {
+		const _path = endpoints['admin/sale-info/id'](params)
+		API.get(_path).then(res => {
+			setSaleInfo(res.data.result);
+		});
+	}
+
 	// update thông tin bài viết
-	const updateInfoProduct = async (event) => {
+	const updateSaleInfo = async (event) => {
 		const formData = Object.assign({}, getValues())
 		const formInfo = {
 			formType: formType,
-			auth: 'admin',
+			auth: user.username,
 			note: 'AdminSaleInfoDetail',
 		}
 		infoRequest(formData, formInfo);
@@ -88,7 +100,7 @@ export default function AdminSaleInfoDetail() {
 			if (event) {
 				event.preventDefault();
 			}
-			let res = await API.put(endpoints['admin/update-product'],
+			let res = await API.put(endpoints['admin/update-sale'],
 				JSON.stringify(formData),
 				{
 					headers: {
@@ -122,26 +134,28 @@ export default function AdminSaleInfoDetail() {
 	}
 
 	// tạo mới bài viết
-	const createNewProduct = async (event) => {
-		const formData = Object.assign({}, getValues());
+	const createNewSaleInfo = async (event) => {
+		let temptForm = Object.assign({}, getValues());
+		let formData = {}
+		saleInfoKey.map((p) => formData[p] = temptForm[p])
+
 		const formInfo = {
 			formType: formType,
-			auth: 'admin',
-			note: 'AdminProductNew',
+			auth: user.username,
+			note: 'AdminSaleInfoNew',
 		}
 		infoRequest(formData, formInfo);
 		try {
 			if (event) {
 				event.preventDefault();
 			}
-			let res = await API.post(endpoints['admin/create-new-product'],
+			let res = await API.post(endpoints['admin/create-new-sale'],
 				JSON.stringify(formData),
 				{
 					headers: {
 						'Content-type': 'application/json; charset=UTF-8',
 					},
 				});
-			console.info("res:", res)
 			if (res.data.error) {
 				setAlertInfo({
 					typeAlert: { warning: true },
@@ -170,8 +184,7 @@ export default function AdminSaleInfoDetail() {
 
 	// chọn button quay về
 	const handleGoBack = () => {
-		// history.push(ProtectRoutes.AdminProduct.path);
-		console.info(getValues())
+		history.push(ProtectRoutes.AdminProduct.path);
 	};
 
 	// xử lý sự kiện đóng thông báo, cật nhật thành công thì reload trang sau khi đóng thông báo
@@ -184,20 +197,18 @@ export default function AdminSaleInfoDetail() {
 		}
 	};
 
-	let elmArr = [];
+	let [elmArr, setElmArr] = useState(null);
 	const handleChooseProduct = (rowData, elementId) => {
-		if (elmArr.length > 0) {
-			elmArr.map((e) => e.classList.remove('row-act'))
-			elmArr = [];
+		if (elmArr !== null) {
+			elmArr.classList.remove('row-act')
 		}
 		let docTemp = document.getElementById(elementId);
 		docTemp.classList.add('row-act');
-		elmArr.push(docTemp);
+		setElmArr(docTemp)
 		setValue('product_id', rowData.product_id);
-		setValue('title', rowData.name);
+		setValue('product_name', rowData.name);
 		setValue('price', rowData.price);
 		setValue('stored_qty', rowData.stored_qty);
-		setProductInfo(rowData)
 	};
 
 	const handleChooseProduct2 = () => {
@@ -205,17 +216,16 @@ export default function AdminSaleInfoDetail() {
 			setBtnValue('Xác nhận')
 		}
 		if (btnValue === 'Xác nhận') {
-			setBtnValue('1')
-			// setValue('product_id', productInfo.product_id)
+			setBtnValue('Tìm sản phẩm')
 		}
 	};
 
 	return (
 		<Container className={classes.AdminSaleInfoDetail}>
 			<Box className='box-title'>
-				{productId === 'new' ? <Typography variant="h4" className='title-product'>Bài viết mới </Typography>
-					: <Typography variant="h4" className='title-product'>{ProtectRoutes.AdminSaleInfoDetail.label}: {1}</Typography>}
-				{btnValue !== '1' && (
+				{saleId === 'new' ? <Typography variant="h4" className='title-product'>Bài viết mới </Typography>
+					: <Typography variant="h4" className='title-product'>{ProtectRoutes.AdminSaleInfoDetail.label}: {saleInfo?.title}</Typography>}
+				{formType !== 'update' && (
 					<Button className='btn-search' id="btnChoose" onClick={handleChooseProduct2}>{btnValue}</Button>
 				)}
 			</Box>
@@ -226,14 +236,12 @@ export default function AdminSaleInfoDetail() {
 				</Box>
 			)}
 
-
 			{/* form */}
 			<AppForm
 				fields={formFields()}
-				// fields={formFields(categorys, products)}
 				control={control}
 				onGoBack={handleGoBack}
-				onGoSubmit={formType === 'insert' ? createNewProduct : updateInfoProduct}
+				onGoSubmit={formType === 'insert' ? createNewSaleInfo : updateSaleInfo}
 				formType={formType}
 			/>
 

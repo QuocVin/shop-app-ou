@@ -21,6 +21,7 @@ app.use("/api", route.publicRoute);
 app.use("/api/products", route.productRoute);
 app.use("/api/categorys", route.categoryRoute);
 app.use("/api/users", route.userRoute);
+app.use("/api/sales_infos", route.saleInfoRoute);
 
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "public/index.html"), function (err) {

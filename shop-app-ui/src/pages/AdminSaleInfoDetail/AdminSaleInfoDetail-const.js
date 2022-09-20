@@ -1,20 +1,16 @@
-export const productKey = [
+export const saleInfoKey = [
 	'product_id',
-	'name',
-	'price',
-	'stored_qty',
-	'category_id',
-	'description',
+	'title',
+	'content',
 ]
 
-export const formFields = (options1, options2) => {
+export const formFields = () => {
 	return [
 		{ id: 'title', label: { title: 'Tiêu đề bài viết' }, xs: 12, component: { textField: true }, required: true },
+		{ id: 'product_name', label: { title: 'Sản phẩm', }, xs: 8, component: { textField: true }, disabled: true },
 		{ id: 'price', label: { title: 'Giá bán' }, xs: 5, component: { textField: true }, type: 'number', disabled: true },
 		{ id: 'stored_qty', label: { title: 'Số lượng kho' }, xs: 5, component: { textField: true }, type: 'number', disabled: true },
-		// { id: 'category_id', label: { title: 'Loại sản phẩm', checkboxLabel: '' }, xs: 4, component: { selectBox: true }, options: options1, required: true },
-		// { id: 'product_id', label: { title: 'Sản phẩm', checkboxLabel: '' }, xs: 6, component: { selectBox: true }, options: options2, required: true },
-		{ id: 'content', label: { title: 'Nội dung bài viết' }, xs: 12, component: { textField: true }, multiline: true, rows: 9, labelClass: { height: '208px' } },
+		{ id: 'content', label: { title: 'Nội dung bài viết' }, xs: 12, component: { textField: true }, required: true, multiline: true, rows: 9, labelClass: { height: '208px' } },
 	]
 }
 

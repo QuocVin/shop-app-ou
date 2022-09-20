@@ -12,6 +12,7 @@ export const infoRequest = (formData, formInfo) => {
 		formData.update_by = auth;
 		formData.update_note = note;
 	}
+	formData.validationflag = '1'
 }
 
 export const rolePaths = {

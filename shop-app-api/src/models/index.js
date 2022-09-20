@@ -10,7 +10,7 @@ const products = [
 ]
 
 const categorys = [
-  ["category_id", "title", "content", "validationflag", "created_date", "created_by", "created_note", "update_date", "update_by", "update_note"],
+  ["title", "content", "validationflag", "created_date", "created_by", "created_note", "update_date", "update_by", "update_note"],
   ["category_id", "title", "content", "validationflag", "update_date", "update_by", "update_note"],
 ]
 
@@ -20,8 +20,8 @@ const discount_codes = [
 ]
 
 const sales_infos = [
-  ["sales_info_id", "title", "content", "validationflag", "created_date", "created_by", "created_note", "update_date", "update_by", "update_note"],
-  ["sales_info_id", "title", "content", "validationflag", "update_date", "update_by", "update_note"],
+  ["product_id", "title", "content", "validationflag", "created_date", "created_by", "created_note", "update_date", "update_by", "update_note"],
+  ["sales_info_id", "product_id", "title", "content", "validationflag", "update_date", "update_by", "update_note"],
 ]
 
 const sales_info_product = [

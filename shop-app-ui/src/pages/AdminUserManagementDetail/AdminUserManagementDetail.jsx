@@ -33,7 +33,6 @@ export default function AdminUserManagementDetail() {
 	const [alertInfo, setAlertInfo] = React.useState(false);
 	const [formType, setFormType] = useState('');
 	const [datePicker, setDatePicker] = useState(new Date());
-
 	let user = cookies.load("user");
 
 	const viewPath = useLocation().pathname.split('/');
@@ -132,7 +131,6 @@ export default function AdminUserManagementDetail() {
 		}
 		infoRequest(formData, formInfo);
 		formData.status_acc = 'active';
-		formData.validationflag = '1';
 		try {
 			if (event) {
 				event.preventDefault();

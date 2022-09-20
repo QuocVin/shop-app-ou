@@ -15,6 +15,10 @@ export let endpoints = {
 	'admin/update-product': '/api/products/update',
 	'admin/create-new-product': '/api/products/insert',
 
+	'admin/sale-info/id': (params) => '/api/sales_infos/getSaleInfoById' + `?sales_info_id=${params}`,
+	'admin/update-sale': '/api/sales_infos/update',
+	'admin/create-new-sale': '/api/sales_infos/insert',
+
 	'admin/category': '/api/categorys/getAll',
 }
 
