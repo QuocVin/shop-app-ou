@@ -10,12 +10,15 @@ const {
 
 exports.getSaleInfoById = async (tableName, params) => {
 	const sql = `
-		SELECT	S.product_id,
+		SELECT	S.sales_info_id,
+				S.product_id,
 				S.title,
 				S.content,
 				P.name				AS product_name,
 				P.price,
-				P.stored_qty
+				P.stored_qty,
+				S.update_note,
+				S.update_date
 		FROM	sales_infos S
 				LEFT OUTER JOIN products P
 					ON	P.product_id = S.product_id
@@ -35,10 +38,12 @@ exports.getSaleInfoList = async (tableName, params) => {
 		SELECT	S.sales_info_id,
 		        S.product_id,
 				S.title,
+				S.content,
 				P.name				AS product_name,
+				P.price,
 				S.validationflag,
 				S.update_note,
-				S.created_date
+				S.update_date
 		FROM	sales_infos S
 				LEFT OUTER JOIN products P
 					ON	P.product_id = S.product_id

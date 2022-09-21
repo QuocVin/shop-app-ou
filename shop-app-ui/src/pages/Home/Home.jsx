@@ -1,64 +1,112 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    Button,
-    CssBaseline,
-    TextField,
-    Link,
-    Grid,
-    Typography,
-    Container,
-    Box,
+	Box,
+	Typography,
+	Container,
+	Button,
+	TextField,
+	Grid,
+	TablePagination,
 } from '@material-ui/core';
 import API, { endpoints } from '../../helpers/API';
-import cookies from 'react-cookies';
-import { Redirect } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
-import { useStyles } from "./Home-styles";
-import { setAuthLS, LS_KEY } from "../../helpers/localStorage";
-import { formSearch } from "./Home-const";
-import { useForm } from "react-hook-form";
+import { useStyles } from './Home-styles';
+import { useHistory } from 'react-router';
 import {
-    AppTable,
-    AppInput,
-    AppForm,
-    AppSearch,
-    AppAlert,
+	AppTable,
+	AppSearch,
+	AppAlert,
+	AppCard
 } from '../../components';
-import { PublicRoutes } from '../../routes/public-route';
-import { infoRequest } from '../../helpers/utils';
-import { ProtectPaths } from '../../routes/protect-route';
+import { ProtectRoutes } from '../../routes/protect-route';
+import { PublicPaths } from '../../routes/public-route';
+import { HomeColumns, formSearch } from "./Home-const"
+import { useForm, Controller } from "react-hook-form";
+import { rolePaths } from '../../helpers/utils'
 
 export default function Home() {
-    const classes = useStyles();
-    const history = useHistory();
-    const dispatch = useDispatch();
-    const [openAlert, setOpenAlert] = React.useState(false);
-    const [alertInfo, setAlertInfo] = React.useState(false);
-    const { control, setValue, getValues } = useForm();
+	const classes = useStyles();
+	const history = useHistory();
+	const [loading, setLoading] = useState(false);
+	const [saleList, setSaleList] = useState([]);
+	const { control, setValue, getValues } = useForm();
+	const [openAlert, setOpenAlert] = React.useState(false);
+	const [alertInfo, setAlertInfo] = React.useState(false);
 
-    const signInSucess = (role) => {
-        setAuthLS(LS_KEY.AUTH_TOKEN, role);
-    }
+	useEffect(() => {
+		async function init() {
+			await fetchSales();
+		}
+		init();
+	}, [])
 
-    // xử lý sự kiện đóng thông báo
-    const handleCloseAlert = (event, reason) => {
-        if (reason === 'clickaway') {
-            setOpenAlert(false);
-            if (alertInfo.typeAlert.success) {
-                window.location.reload();
-            }
-        }
-    };
+	// lấy danh sách product
+	const fetchSales = async (params = '') => {
+		const _path = endpoints['admin/sale-info'](params)
+		// const _path = endpoints['admin/product'](params, page)
+		API.get(_path).then(res => {
+			setSaleList(res.data.result);
+			setLoading(false)
+		})
+	}
 
-    return (
-        <Container className={classes.Home}>
-            <Box className='box-login'>
-                <Box>
-                    <Typography variant="h4" className='title-login'>{PublicRoutes.Home.label}</Typography>
-                </Box>
+	const handleSearch = async () => {
+		let tempSearch = Object.assign({}, getValues())
+		let tempKeys = Object.keys(tempSearch)
+		let strSearch = '&' + tempKeys.map((s) => s + '=' + tempSearch[`${s}`] + '').join('&')
+		await fetchSales(strSearch)
+	};
 
-            </Box>
-        </Container>
-    );
+	// chuyển trang đến thông tin chi tiết -> thực hiện order
+	const handleAddCart = async (itemData) => {
+		const _path = PublicPaths.SaleInfoDetail.replace(":id", itemData.sales_info_id)
+		history.push(_path)
+	}
+
+	// xử lý sự kiện đóng thông báo, cật nhật thành công thì reload trang sau khi đóng thông báo
+	const handleCloseAlert = (event, reason) => {
+		if (reason === 'clickaway') {
+			setOpenAlert(false);
+			if (alertInfo.typeAlert.success) {
+				window.location.reload();
+			}
+		}
+	};
+
+	// chuyển trang
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(6);
+
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(+event.target.value);
+		setPage(0);
+	};
+
+	return (
+		<Box className={classes.Home}>
+			<Box className='box-title'>
+				<Typography variant="h4">Danh sách sản phẩm</Typography>
+				<TablePagination
+					rowsPerPageOptions={[3, 6, 9]}
+					component="div"
+					count={saleList.length}
+					rowsPerPage={rowsPerPage}
+					page={page}
+					onPageChange={handleChangePage}
+					onRowsPerPageChange={handleChangeRowsPerPage}
+					labelRowsPerPage='Hiển thị'
+				/>
+			</Box>
+			<Box className='box-cart-list'>
+				{saleList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataItem, idx) => (
+					<div className='box-cart-padding'>
+						<AppCard data={dataItem} handleCart={handleAddCart} key={`cart-home-${idx}`} className={'box-cart-item'} handleChoose={handleAddCart} />
+					</div>
+				))}
+			</Box>
+		</Box>
+	);
 }

@@ -3,6 +3,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import PageLogin from "../pages/Login/Login";
 import PageRegister from "../pages/Register";
 import PageHome from "../pages/Home";
+import PageSaleInfoDetail from "../pages/SaleInfoDetail";
 
 const NEDRoutes = {
 	New: "new",
@@ -14,6 +15,7 @@ export const PublicRouteNames = {
 	Login: 'Login',
 	Register: 'Register',
 	Home: 'Home',
+	SaleInfoDetail: 'SaleInfoDetail',
 }
 
 // đường dẫn chỉ đến view
@@ -21,6 +23,7 @@ export const PublicPaths = {
 	Login: ['', PublicRouteNames.Login].join('/'),
 	Register: ['', PublicRouteNames.Register].join('/'),
 	Home: '/',
+	SaleInfoDetail: ['', PublicRouteNames.SaleInfoDetail, NEDRoutes.Detail].join('/'),
 }
 
 // thông tin cần thiết để hiển thị 1 view
@@ -46,4 +49,11 @@ export const PublicRoutes = {
 		path: PublicPaths.Home,
 		component: PageHome,
 	},
+	SaleInfoDetail: {
+		exact: true,
+		id: PublicRouteNames.SaleInfoDetail,
+		label: "Thông tin sản phẩm",
+		path: PublicPaths.SaleInfoDetail,
+		component: PageSaleInfoDetail,
+	}
 }
