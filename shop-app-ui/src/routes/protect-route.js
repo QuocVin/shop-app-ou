@@ -40,7 +40,7 @@ export const ProtectRouteNames = {
 
 // đường dẫn chỉ đến view admin
 export const ProtectPaths = {
-	Dashboard: ['', ProtectRouteNames.Dashboard].join('/'),
+	Dashboard: '/Admin',
 
 	AdminUserManagement: ['/Admin', ProtectRouteNames.AdminUserManagement].join('/'),
 	AdminUserManagementDetail: ['/Admin', ProtectRouteNames.AdminUserManagementDetail, NEDRoutes.Detail].join('/'),

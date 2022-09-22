@@ -70,6 +70,9 @@ export default function AppTable({
 			if (data === '1') return 'Hoạt động';
 			return 'Đã ẩn';
 		}
+		if (formatType === 'price') {
+			return `${data} VNĐ`;
+		}
 		return data
 	}
 

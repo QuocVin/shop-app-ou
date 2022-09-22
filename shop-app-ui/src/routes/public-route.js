@@ -4,6 +4,7 @@ import PageLogin from "../pages/Login/Login";
 import PageRegister from "../pages/Register";
 import PageHome from "../pages/Home";
 import PageSaleInfoDetail from "../pages/SaleInfoDetail";
+import PageProfile from "../pages/Profile";
 
 const NEDRoutes = {
 	New: "new",
@@ -16,6 +17,7 @@ export const PublicRouteNames = {
 	Register: 'Register',
 	Home: 'Home',
 	SaleInfoDetail: 'SaleInfoDetail',
+	Profile: 'Profile',
 }
 
 // đường dẫn chỉ đến view
@@ -24,6 +26,7 @@ export const PublicPaths = {
 	Register: ['', PublicRouteNames.Register].join('/'),
 	Home: '/',
 	SaleInfoDetail: ['', PublicRouteNames.SaleInfoDetail, NEDRoutes.Detail].join('/'),
+	Profile: ['', PublicRouteNames.Profile].join('/'),
 }
 
 // thông tin cần thiết để hiển thị 1 view
@@ -55,5 +58,12 @@ export const PublicRoutes = {
 		label: "Thông tin sản phẩm",
 		path: PublicPaths.SaleInfoDetail,
 		component: PageSaleInfoDetail,
-	}
+	},
+	Profile: {
+		exact: true,
+		id: PublicRouteNames.Profile,
+		label: "Thông tin sản phẩm",
+		path: PublicPaths.Profile,
+		component: PageProfile,
+	},
 }

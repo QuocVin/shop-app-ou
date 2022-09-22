@@ -41,7 +41,7 @@ export default function ({ classes, open, setOpen, mainRef }) {
 					</IconButton>
 
 					<Button>
-						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/Admin/AdminProduct')}>
+						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/Admin')}>
 							MANAGE SHOP
 						</Typography>
 					</Button>
@@ -79,14 +79,24 @@ export default function ({ classes, open, setOpen, mainRef }) {
 	}
 	let userComponet = useMemo(() => {
 		if (user.username) {
-			return (
-				<>
-					<Button>
-						-- {user.username} --
-					</Button>
-					<Button onClick={handleLogout_click}> <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng xuất</Typography> </Button>
-				</>
-			)
+			if (user.role_name === rolePaths.CUSTOMER) {
+				return (
+					<>
+						<Button onClick={() => handleClick('/Profile')}>
+							-- {user.username} --
+						</Button>
+						<Button onClick={handleLogout_click}> <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng xuất</Typography> </Button>
+					</>
+				)
+			} else
+				return (
+					<>
+						<Button onClick={() => handleClick('/Admin')}>
+							-- {user.username} --
+						</Button>
+						<Button onClick={handleLogout_click}> <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng xuất</Typography> </Button>
+					</>
+				)
 		} else {
 			return (
 				<>

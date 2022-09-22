@@ -25,3 +25,31 @@ export const formFields = (onChangeDatePicker, valueDatePicker) => {
 		{ id: 'phone', label: { title: 'Số điện thoại' }, xs: 5, component: { textField: true }, type: 'number' },
 	]
 }
+
+export const ProfileOrderColumns = [
+	{
+		id: "product_name",
+		name: "Tên sản phẩm",
+		width: 250,
+	},
+	{
+		id: "total_qty",
+		name: "Số lượng",
+		width: 100,
+		align: 'right'
+	},
+	{
+		id: "total_price",
+		name: "Tổng giá",
+		width: 170,
+		format: 'price',
+		align: 'right'
+	},
+	{
+		id: "update_date",
+		name: "Ngày thực hiện",
+		width: 130,
+		format: 'date',
+		align: 'center'
+	},
+]

@@ -22,6 +22,7 @@ export let endpoints = {
 	'admin/create-new-sale': '/api/sales_infos/insert',
 	'admin/delete-sale-info': '/api/sales_infos/remove',
 
+	'admin/order-by-user': (params) => '/api/orders/getOrderByUser' + `?user_id=${params}`,
 	'admin/create-new-order': '/api/orders/insert',
 
 	'admin/category': '/api/categorys/getAll',

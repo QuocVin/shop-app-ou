@@ -21,7 +21,7 @@ import {
 	AppAlert,
 } from '../../components';
 import { useForm, Controller } from "react-hook-form";
-import { userKey, formFields } from "./AdminUserManagementDetail-const";
+import { userKey, formFields, ProfileOrderColumns } from "./AdminUserManagementDetail-const";
 import cookies from 'react-cookies';
 
 export default function AdminUserManagementDetail() {
@@ -33,6 +33,7 @@ export default function AdminUserManagementDetail() {
 	const [alertInfo, setAlertInfo] = React.useState(false);
 	const [formType, setFormType] = useState('');
 	const [datePicker, setDatePicker] = useState(new Date());
+	const [orderUser, setOrderUser] = useState([]);
 	let user = cookies.load("user");
 
 	const viewPath = useLocation().pathname.split('/');
@@ -47,6 +48,7 @@ export default function AdminUserManagementDetail() {
 				setFormType('insert')
 			} else {
 				await fetchDataUser(userId)
+				await fetchOrderUser(userId)
 				setFormType('update')
 			}
 		}
@@ -65,13 +67,19 @@ export default function AdminUserManagementDetail() {
 
 	// thực hiện câu truy vấn lên server lấy thông tin người dùng
 	const fetchDataUser = async (params) => {
-		setTimeout(() => {
-			const _path = endpoints['admin/user/id'](params)
-			API.get(_path).then(res => {
-				setUserInfo(res.data.result);
-				setLoading(false)
-			})
-		}, 500);
+		const _path = endpoints['admin/user/id'](params)
+		API.get(_path).then(res => {
+			setUserInfo(res.data.result);
+			setLoading(false)
+		})
+	}
+
+	// lấy danh sách hóa đơn
+	const fetchOrderUser = async (params = '') => {
+		const _path = endpoints['admin/order-by-user'](params)
+		API.get(_path).then(res => {
+			setOrderUser(res.data.result);
+		})
 	}
 
 	// update thông tin người dùng
@@ -190,20 +198,25 @@ export default function AdminUserManagementDetail() {
 
 	return (
 		<Container className={classes.AdminUserManagementDetail}>
-			<Box>
-				{userId === 'new' ? <Typography variant="h4" className='title-product'>Người dùng mới</Typography>
-					: <Typography variant="h4" className='title-product'>{ProtectRoutes.AdminUserManagementDetail.label}: {userInfo?.name}</Typography>}
-			</Box>
+			<div>
+				<Box>
+					{userId === 'new' ? <Typography variant="h4" className='title-user-manager'>Người dùng mới</Typography>
+						: <Typography variant="h4" className='title-user-manager'>{ProtectRoutes.AdminUserManagementDetail.label}: {userInfo?.name}</Typography>}
+				</Box>
 
-			{/* tìm kiếm */}
-			<AppForm
-				fields={formFields(testFun, datePicker)}
-				control={control}
-				onGoBack={handleGoBack}
-				onGoSubmit={formType === 'insert' ? createNewUser : updateInfoUser}
-				formType={formType}
-			/>
-
+				{/* tìm kiếm */}
+				<AppForm
+					fields={formFields(testFun, datePicker)}
+					control={control}
+					onGoBack={handleGoBack}
+					onGoSubmit={formType === 'insert' ? createNewUser : updateInfoUser}
+					formType={formType}
+				/>
+			</div>
+			<div className='box-order-list'>
+				<Typography variant="h4" className='title-user-manager'>Lịch sử giao dịch</Typography>
+				<AppTable columns={ProfileOrderColumns} data={orderUser} isBtn={false} />
+			</div>
 			<AppAlert open={openAlert} handleClose={handleCloseAlert} typeAlert={alertInfo?.typeAlert} label={alertInfo?.label} />
 		</Container>
 	);

@@ -148,7 +148,7 @@ export default function SaleInfoDetail() {
 			}
 		}
 	};
-	// const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+
 	const handleChangeQty = (flag) => {
 		if (flag) {
 			setQtyValue(qtyValue + 1)
