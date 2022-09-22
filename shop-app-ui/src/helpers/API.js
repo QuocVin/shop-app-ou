@@ -22,6 +22,8 @@ export let endpoints = {
 	'admin/create-new-sale': '/api/sales_infos/insert',
 	'admin/delete-sale-info': '/api/sales_infos/remove',
 
+	'admin/create-new-order': '/api/orders/insert',
+
 	'admin/category': '/api/categorys/getAll',
 }
 

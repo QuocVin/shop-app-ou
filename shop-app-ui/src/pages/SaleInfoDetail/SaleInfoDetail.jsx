@@ -23,6 +23,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import cookies from 'react-cookies';
 import Alert from '@material-ui/lab/Alert';
+import { infoRequest } from '../../helpers/utils';
 
 export default function SaleInfoDetail() {
 	const classes = useStyles();
@@ -59,12 +60,63 @@ export default function SaleInfoDetail() {
 		getDataToForm();
 	}, [saleInfo]);
 
-	// lấy thông tin người dùng từ data truyền vào form
+	// lấy thông tin sản phẩm từ data truyền vào form
 	const getDataToForm = (formType) => {
 		Object.keys(saleInfo).map((k) => setValue(k, saleInfo[k]));
 		let tempTotal = getValues().price * getValues()?.total_qty ? (getValues()?.total_qty - 0) : 0;
 		setValue('total_price', tempTotal)
 	};
+
+	// tạo mới order
+	const createNewOrder = async (event) => {
+		const formData = {
+			user_id: user.user_id,
+			product_id: saleInfo.product_id,
+			total_qty: qtyValue,
+			total_price: totalValue,
+		}
+		const formInfo = {
+			formType: 'insert',
+			auth: user.username,
+			note: 'SaleInfoDetail',
+		}
+		infoRequest(formData, formInfo);
+		try {
+			if (event) {
+				event.preventDefault();
+			}
+			let res = await API.post(endpoints['admin/create-new-order'],
+				JSON.stringify(formData),
+				{
+					headers: {
+						'Content-type': 'application/json; charset=UTF-8',
+					},
+				});
+			if (res.data.error) {
+				setAlertInfo({
+					typeAlert: { warning: true },
+					label: 'Lỗi, bạn vui lòng kiểm tra lại thông tin!',
+				})
+				setOpenAlert(true);
+			} else {
+				setAlertInfo({
+					typeAlert: { success: true },
+					label: 'Tạo mới người dùng thành công!!!'
+				})
+				setOpenAlert(true);
+				setTimeout(() => {
+					history.push(ProtectRoutes.AdminUserManagement.path);
+				}, 1500);
+			}
+		} catch (err) {
+			console.log("ERROR:\n", err);
+			setOpenAlert(true);
+			setAlertInfo({
+				typeAlert: { error: true },
+				label: 'Lỗi hệ thống, bạn vui lòng kiểm tra lại kết nối!'
+			})
+		}
+	}
 
 	// thêm vào giỏ hàng tạm thời, không lưu xuống data
 	const handleAddCart = async () => {
@@ -77,7 +129,7 @@ export default function SaleInfoDetail() {
 				setOpenAlert(true);
 				return
 			}
-			console.info('1')
+			await createNewOrder()
 		} else {
 			setAlertInfo({
 				typeAlert: { warning: true },

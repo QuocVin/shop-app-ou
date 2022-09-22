@@ -4,6 +4,7 @@ const userAPI = require("./user-api");
 const publicAPI = require("./public-api");
 const productAPI = require("./product-api");
 const saleAPI = require("./sale-info-api");
+const orderAPI = require("./order-api");
 
 module.exports = {
   helperAPI,
@@ -12,4 +13,5 @@ module.exports = {
   publicAPI,
   productAPI,
   saleAPI,
+  orderAPI,
 };
