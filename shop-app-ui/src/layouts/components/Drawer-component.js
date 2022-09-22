@@ -25,53 +25,36 @@ export default function ({ classes, open }) {
 
 	const history = useHistory();
 
-	// xử lý hiện các mục tại thanh drawer
-	const getDrawer = (loggedIn, check) => {
-		// if (loggedIn) {
-		// 	// if (check === rolePaths.EMPLOYEE) {
-		// 	//     checkAuth = true;
-		// 	//     return (
-		// 	//         Object.values(EmpRoutesDrawer)
-		// 	//     );
-		// 	// }
-		// 	// if (check === rolePaths.ADMIN) {
-		// 	//     checkAuth = true;
-		// 	//     return (
-		// 	//         Object.values(ProtectRoutesDrawer)
-		// 	//     );
-		// 	// }
-		// 	// if (check === rolePaths.GUEST) {
-		// 	//     checkAuth = false;
-		// 	//     return (
-		// 	//         Object.values([])
-		// 	//     );
-		// 	// }
-		// }
-		// else {
-		// 	// checkAuth = false;
-		// 	// return (
-		// 	// 	Object.values(ProtectRoutes)
-		// 	// );
-		// 	let tempRoute = Object.values(ProtectRoutes);
-		// 	let tempArrDrawer = tempRoute.filter((d) => d.drawer === true)
-		// 	return tempArrDrawer;
-		// }
-		let tempRoute = Object.values(ProtectRoutes);
-		let tempArrDrawer = tempRoute.filter((d) => d.drawer === true)
-		return tempArrDrawer;
-	}
-	const [childDrawer, setChildDrawer] = React.useState(
-		getDrawer(loggedIn, check)
-	);
-	const temp = Object.values(ProtectRoutes)
-	// const [childDrawer, setChildDrawer] = React.useState(temp);
-	// console.info(temp)
 	const store = useStore();
 	const auth = store.getState();
 	let user = auth;
 	if (cookies.load("user") != null) {
 		user = cookies.load("user")
 	};
+
+	// xử lý hiện các mục tại thanh drawer
+	const getDrawer = (loggedIn, check) => {
+		if (user) {
+			if (user.role_name === rolePaths.ADMIN) {
+				let tempRoute = Object.values(ProtectRoutes);
+				let tempArrDrawer = tempRoute.filter((d) => d.drawer === true)
+				return tempArrDrawer;
+			} else {
+				let tempRoute = Object.values(ProtectRoutes);
+				let tempArrDrawer = tempRoute.filter((d) => d.drawer === true && d.isAdmin !== true)
+				return tempArrDrawer;
+			}
+		}
+		return []
+	}
+
+	const [childDrawer, setChildDrawer] = React.useState(
+		getDrawer(loggedIn, check)
+	);
+	const temp = Object.values(ProtectRoutes)
+	// const [childDrawer, setChildDrawer] = React.useState(temp);
+	// console.info(temp)
+
 
 	// chọn avatar chuyển trang
 	const handleGoProfile = (check, userId) => {

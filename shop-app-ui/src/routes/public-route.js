@@ -65,5 +65,6 @@ export const PublicRoutes = {
 		label: "Thông tin sản phẩm",
 		path: PublicPaths.Profile,
 		component: PageProfile,
+		isLogin: true,
 	},
 }

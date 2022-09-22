@@ -11,9 +11,10 @@ import PageAdminProductDetail from "../pages/AdminProductDetail";
 import PageAdminSaleInfo from "../pages/AdminSaleInfo";
 import PageAdminSaleInfoDetail from "../pages/AdminSaleInfoDetail";
 
-// import PageAdminProduct__ from "../pages/AdminProduct__";
-// import PageAdminProductDetail__ from "../pages/AdminProductDetail__";
-// import PageAdminProductNews__ from "../pages/AdminProductNews__";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import GroupIcon from '@material-ui/icons/Group';
+import WorkIcon from '@material-ui/icons/Work';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 const NEDRoutes = {
 	New: "new",
@@ -63,8 +64,9 @@ export const ProtectRoutes = {
 		label: "Trang quản trị",
 		path: ProtectPaths.Dashboard,
 		component: DashboardPage,
-		icon: HomeIcon,
+		icon: DashboardIcon,
 		drawer: true,
+		isAdmin: true,
 	},
 	// routes manager user view admin
 	AdminUserManagement: {
@@ -73,8 +75,9 @@ export const ProtectRoutes = {
 		label: "Quản lý người dùng",
 		path: ProtectPaths.AdminUserManagement,
 		component: PageAdminUserManagement,
-		icon: HomeIcon,
+		icon: GroupIcon,
 		drawer: true,
+		isAdmin: true,
 	},
 	AdminUserManagementDetail: {
 		exact: true,
@@ -82,7 +85,6 @@ export const ProtectRoutes = {
 		label: "Thông tin người dùng",
 		path: ProtectPaths.AdminUserManagementDetail,
 		component: PageAdminUserManagementDetail,
-		icon: HomeIcon
 	},
 	AdminUserManagementNews: {
 		exact: true,
@@ -90,7 +92,6 @@ export const ProtectRoutes = {
 		label: "Tạo mới người dùng",
 		path: ProtectPaths.AdminUserManagementNews,
 		component: PageAdminUserManagementDetail,
-		icon: HomeIcon
 	},
 	// routes product view admin
 	AdminProduct: {
@@ -99,7 +100,7 @@ export const ProtectRoutes = {
 		label: "Quản lý sản phẩm",
 		path: ProtectPaths.AdminProduct,
 		component: PageAdminProduct,
-		icon: HomeIcon,
+		icon: WorkIcon,
 		drawer: true,
 	},
 	AdminProductDetail: {
@@ -108,7 +109,6 @@ export const ProtectRoutes = {
 		label: "Thông tin sản phẩm",
 		path: ProtectPaths.AdminProductDetail,
 		component: PageAdminProductDetail,
-		icon: HomeIcon
 	},
 	AdminProductNews: {
 		exact: true,
@@ -116,7 +116,6 @@ export const ProtectRoutes = {
 		label: "Tạo mới sản phẩm",
 		path: ProtectPaths.AdminProductNews,
 		component: PageAdminProductDetail,
-		icon: HomeIcon
 	},
 	// routes saleInfo view admin
 	AdminSaleInfo: {
@@ -125,7 +124,7 @@ export const ProtectRoutes = {
 		label: "Quản lý bài viết",
 		path: ProtectPaths.AdminSaleInfo,
 		component: PageAdminSaleInfo,
-		icon: HomeIcon,
+		icon: DescriptionIcon,
 		drawer: true,
 	},
 	AdminSaleInfoDetail: {
@@ -134,7 +133,6 @@ export const ProtectRoutes = {
 		label: "Thông tin bài viết",
 		path: ProtectPaths.AdminSaleInfoDetail,
 		component: PageAdminSaleInfoDetail,
-		icon: HomeIcon
 	},
 	AdminSaleInfoNews: {
 		exact: true,
@@ -142,6 +140,5 @@ export const ProtectRoutes = {
 		label: "Tạo mới bài viết",
 		path: ProtectPaths.AdminSaleInfoNews,
 		component: PageAdminSaleInfoDetail,
-		icon: HomeIcon
 	},
 }

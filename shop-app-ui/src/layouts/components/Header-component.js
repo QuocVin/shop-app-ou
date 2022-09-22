@@ -24,6 +24,13 @@ export default function ({ classes, open, setOpen, mainRef }) {
 	const history = useHistory();
 	const store = useStore();
 
+	let user = {};
+	if (cookies.load("user") != null) {
+		user = cookies.load("user")
+	} else {
+		user.username = null;
+	};
+
 	// const check = 'register';
 	const check = getAuthLS(LS_KEY.AUTH_TOKEN)
 
@@ -41,9 +48,14 @@ export default function ({ classes, open, setOpen, mainRef }) {
 					</IconButton>
 
 					<Button>
-						<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/Admin')}>
-							MANAGE SHOP
-						</Typography>
+						{user.role_name === rolePaths.ADMIN ?
+							<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/Admin')}>
+								MANAGE SHOP
+							</Typography> :
+							<Typography variant="h5" noWrap className="logo-text" onClick={() => handleClick('/Admin/AdminProduct')}>
+								MANAGE SHOP
+							</Typography>
+						}
 					</Button>
 				</div>
 			);
@@ -58,13 +70,6 @@ export default function ({ classes, open, setOpen, mainRef }) {
 				</div >
 			);
 	}
-
-	let user = {};
-	if (cookies.load("user") != null) {
-		user = cookies.load("user")
-	} else {
-		user.username = null;
-	};
 
 	// chọn đăng xuất
 	const handleLogout_click = () => {
@@ -83,6 +88,15 @@ export default function ({ classes, open, setOpen, mainRef }) {
 				return (
 					<>
 						<Button onClick={() => handleClick('/Profile')}>
+							-- {user.username} --
+						</Button>
+						<Button onClick={handleLogout_click}> <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng xuất</Typography> </Button>
+					</>
+				)
+			} else if (user.role_name === rolePaths.EMPLOYEE) {
+				return (
+					<>
+						<Button onClick={() => handleClick('/Admin/AdminProduct')}>
 							-- {user.username} --
 						</Button>
 						<Button onClick={handleLogout_click}> <Typography variant="subtitle1" style={{ textTransform: 'none' }}>Đăng xuất</Typography> </Button>
