@@ -28,6 +28,13 @@ export const AdminSaleInfoColumns = [
 		name: "Nội dung thực hiện",
 		width: 250,
 	},
+	{
+		id: "update_date",
+		name: "Cập nhật",
+		width: 110,
+		format: 'date',
+		align: 'center'
+	},
 ]
 
 export const formSearch = [

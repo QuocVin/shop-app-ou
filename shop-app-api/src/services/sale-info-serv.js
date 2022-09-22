@@ -46,12 +46,13 @@ exports.getSaleInfoList = async (tableName, params) => {
 				P.price,
 				S.validationflag,
 				S.update_note,
-				S.update_date
+				S.update_date,
+				S.created_date
 		FROM	sales_infos S
 				LEFT OUTER JOIN products P
 					ON	P.product_id = S.product_id
 		WHERE	S.title like '%${params.title || ''}%'
-		ORDER BY S.update_date, S.title
+		ORDER BY S.update_date desc, S.title
 		`;
 	try {
 		const ret = await db.query(sql, { type: QueryTypes.SELECT });

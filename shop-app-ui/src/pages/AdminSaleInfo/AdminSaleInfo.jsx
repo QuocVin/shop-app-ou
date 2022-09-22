@@ -64,7 +64,7 @@ export default function AdminSaleInfo() {
 		history.push(ProtectRoutes.AdminSaleInfoNews.path);
 	};
 
-	// xóa người dùng
+	// xóa bài viết
 	const handleDeleteSale = async (rowData) => {
 		const formData = {
 			sales_info_id: rowData.sales_info_id
@@ -86,7 +86,7 @@ export default function AdminSaleInfo() {
 			} else {
 				setAlertInfo({
 					typeAlert: { success: true },
-					label: 'Xóa người dùng thành công!!!'
+					label: 'Xóa bài viết thành công!!!'
 				})
 				setOpenAlert(true);
 				setTimeout(() => {
@@ -116,7 +116,7 @@ export default function AdminSaleInfo() {
 	return (
 		<Box className={classes.AdminSaleInfo}>
 			<Box>
-				<Typography variant="h3">{userRole === 'manager' ? 'Quản lý nhân viên' : 'Quản lý người dùng'}</Typography>
+				<Typography variant="h3">{userRole === 'manager' ? 'Quản lý nhân viên' : 'Quản lý bài viết'}</Typography>
 			</Box>
 			<Box className='box-table'>
 				<Box className='box-search'>
@@ -125,7 +125,7 @@ export default function AdminSaleInfo() {
 					</Box>
 				</Box>
 
-				{/* danh sách người dùng */}
+				{/* danh sách bài viết */}
 				{loading ? <p>Loading ...</p> :
 					<AppTable columns={AdminSaleInfoColumns} data={saleList} paramsChoose={paramToDetail} handleDelete={handleDeleteSale} />
 				}

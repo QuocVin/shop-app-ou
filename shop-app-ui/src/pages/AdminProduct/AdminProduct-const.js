@@ -29,8 +29,15 @@ export const AdminProductColumns = [
 		align: 'center'
 	},
 	{
-		id: "update_date",
+		id: "created_date",
 		name: "Ngày thực hiện",
+		width: 140,
+		format: 'date',
+		align: 'center'
+	},
+	{
+		id: "update_date",
+		name: "Cập nhật",
 		width: 140,
 		format: 'date',
 		align: 'center'

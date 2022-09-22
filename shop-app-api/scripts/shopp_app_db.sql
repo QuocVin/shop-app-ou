@@ -71,11 +71,11 @@ create table [dbo].[categorys](
 	[update_note]			[nvarchar](50) null,
 );
 
-insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 1','các mặc hàng quần áo', '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 2','các mặc hàng dày dép', '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 3','các mặc ba lô', '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 4','các mặc điện thoại', '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 5','các mặc hàng trong nhà', '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 1','các mặc hàng quần áo', '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 2','các mặc hàng dày dép', '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 3','các mặc ba lô', '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 4','các mặc điện thoại', '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [categorys](name,description,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values('sản phẩm loại 5','các mặc hàng trong nhà', '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
 
 
 -- sản phẩm
@@ -97,11 +97,11 @@ create table [dbo].[products](
 	CONSTRAINT FK_category_id FOREIGN KEY (category_id)			REFERENCES categorys(category_id),
 );
 
-insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'quần 1', 'trang phục công sở', 200, 123, '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'áo 2', 'trang phục thể thao', 200, 123, '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'quần 3', 'trang phục ở nhà', 200, 123, '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(2,'dép 1', 'dép lào', 200, 123, '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
-insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(2,'dép 2', 'dép tổ ong', 200, 123, '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
+insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'quần 1', 'trang phục công sở', 200, 123, '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'áo 2', 'trang phục thể thao', 200, 123, '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'quần 3', 'trang phục ở nhà', 200, 123, '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(2,'dép 1', 'dép lào', 200, 123, '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
+insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(2,'dép 2', 'dép tổ ong', 200, 123, '1', '2022-01-03', 'admin', 'create by sql', '2022-01-03','admin', 'create by sql');
 
 
 -- -- giảm giá theo loại sản phẩm
@@ -140,6 +140,12 @@ create table [dbo].[sales_infos](
 
 	CONSTRAINT FK_product_id	FOREIGN KEY (product_id)		REFERENCES products(product_id),
 );
+
+insert into [sales_infos] (product_id,title,content,image,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(1,'title 1', 'content 1', '../../assets/images/1.jpg','1', '2022-05-09', 'admin', 'create by sql', '2022-05-09','admin', 'create by sql');
+insert into [sales_infos] (product_id,title,content,image,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(2,'title 2', 'content 2', '../../assets/images/2.jpg','1', '2022-05-09', 'admin', 'create by sql', '2022-05-09','admin', 'create by sql');
+insert into [sales_infos] (product_id,title,content,image,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(3,'title 3', 'content 3', '../../assets/images/3.jpg','1', '2022-05-09', 'admin', 'create by sql', '2022-05-09','admin', 'create by sql');
+insert into [sales_infos] (product_id,title,content,image,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(4,'title 4', 'content 4', '../../assets/images/4.jpg','1', '2022-05-09', 'admin', 'create by sql', '2022-05-09','admin', 'create by sql');
+insert into [sales_infos] (product_id,title,content,image,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(5,'title 5', 'content 5', '../../assets/images/5.jpg','1', '2022-05-09', 'admin', 'create by sql', '2022-05-09','admin', 'create by sql');
 
 
 -- create table [dbo].[sales_info_product](
@@ -197,7 +203,7 @@ create table [dbo].[orders](
 -- );
 
 
--- thông tin hóa đơn nhập hàng
+-- thông tin hóa đơn nhập hàng	-- chưa xây dựng
 create table [dbo].[import_products](
 	[import_product_id]		[int] not null identity(1,1) primary key,
 	[total_qty]				[nvarchar](50) null,

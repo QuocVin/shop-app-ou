@@ -169,7 +169,7 @@ export default function AdminProductDetail() {
 				setOpenAlert(true);
 				setTimeout(() => {
 					history.push(ProtectRoutes.AdminProduct.path);
-				}, 1500);
+				}, 500);
 			}
 		} catch (err) {
 			console.log("ERROR:\n", err);

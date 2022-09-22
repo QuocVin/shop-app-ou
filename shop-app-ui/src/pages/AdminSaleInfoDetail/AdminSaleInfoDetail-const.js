@@ -1,4 +1,5 @@
 export const saleInfoKey = [
+	'sales_info_id',
 	'product_id',
 	'title',
 	'content',

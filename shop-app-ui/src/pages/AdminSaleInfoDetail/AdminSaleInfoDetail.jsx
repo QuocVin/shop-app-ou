@@ -48,11 +48,11 @@ export default function AdminSaleInfoDetail() {
 			// setLoading(true)
 			if (saleId === 'new') {
 				setFormType('insert')
+				fetchProducts();
 			} else {
 				await fetchDataSale(saleId)
 				setFormType('update')
 			}
-			fetchProducts();
 		}
 		init();
 	}, []);
@@ -89,7 +89,9 @@ export default function AdminSaleInfoDetail() {
 
 	// update thông tin bài viết
 	const updateSaleInfo = async (event) => {
-		const formData = Object.assign({}, getValues())
+		let tempForm = {};
+		saleInfoKey.map((p) => tempForm[p] = getValues()[p])
+		const formData = Object.assign({}, tempForm)
 		const formInfo = {
 			formType: formType,
 			auth: user.username,
