@@ -15,6 +15,7 @@ exports.getSaleInfoById = async (tableName, params) => {
 				S.title,
 				S.content,
 				P.name				AS product_name,
+				C.name				AS category_name,
 				P.price,
 				P.stored_qty,
 				S.update_note,
@@ -22,6 +23,8 @@ exports.getSaleInfoById = async (tableName, params) => {
 		FROM	sales_infos S
 				LEFT OUTER JOIN products P
 					ON	P.product_id = S.product_id
+				LEFT OUTER JOIN categorys C
+					ON	C.category_id = P.category_id
 		WHERE	sales_info_id = ${params.sales_info_id}
 		`
 

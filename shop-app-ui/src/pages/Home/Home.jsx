@@ -102,8 +102,8 @@ export default function Home() {
 			</Box>
 			<Box className='box-cart-list'>
 				{saleList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((dataItem, idx) => (
-					<div className='box-cart-padding'>
-						<AppCard data={dataItem} handleCart={handleAddCart} key={`cart-home-${idx}`} className={'box-cart-item'} handleChoose={handleAddCart} />
+					<div className='box-cart-padding' key={`home-box-item-cart-${idx}`}>
+						<AppCard data={dataItem} handleCart={handleAddCart} className={'box-cart-item'} handleChoose={handleAddCart} />
 					</div>
 				))}
 			</Box>

@@ -7,6 +7,12 @@ export const useStyles = makeStyles((theme) => ({
     media: {
         height: 320,
     },
+    title: {
+        wordBreak: 'break-all',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+    },
     rowAct: {
         display: 'flex',
         justifyContent: 'space-between',

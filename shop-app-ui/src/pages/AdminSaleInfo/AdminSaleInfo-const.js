@@ -2,7 +2,7 @@ export const AdminSaleInfoColumns = [
 	{
 		id: "title",
 		name: "Tiêu đề bài viết",
-		width: 250,
+		width: 300,
 	},
 	{
 		id: "product_name",

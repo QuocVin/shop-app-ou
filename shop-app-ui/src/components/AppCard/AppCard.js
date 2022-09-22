@@ -28,7 +28,7 @@ export default function MediaCard({
 					title="Contemplative-Reptile"
 				/>
 				<CardContent>
-					<Typography gutterBottom variant="h5" component="h2">{data.title}</Typography>
+					<Typography gutterBottom variant="h5" component="h2" className={classes.title}>{data.title}</Typography>
 					<Typography variant="body1" color="textSecondary" component="p" className={classes.content}>{data.content}</Typography>
 				</CardContent>
 			</CardActionArea>

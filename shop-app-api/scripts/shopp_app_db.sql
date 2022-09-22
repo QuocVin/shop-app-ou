@@ -104,22 +104,22 @@ insert into [products](category_id,name,description,price,stored_qty,validationf
 insert into [products](category_id,name,description,price,stored_qty,validationflag,created_date,created_by,created_note,update_date,update_by,update_note) values(2,'dép 2', 'dép tổ ong', 200, 123, '1', 2022-05-09, 'admin', 'create by sql', 2022-05-09,'admin', 'create by sql');
 
 
--- giảm giá theo loại sản phẩm
-create table [dbo].[discount_codes](
-	[discount_code_id]		[int] not null identity(1,1) primary key,
-	[category_id]			[int] not null,
-	[name]					[nvarchar](50) null,
-	[used_time]				[datetime] null,
-	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
-	[created_date]			[datetime] null,
-	[created_by]			[nvarchar](50) null,
-	[created_note]			[nvarchar](50) null,
-	[update_date]			[datetime] null,
-	[update_by]				[nvarchar](50) null,
-	[update_note]			[nvarchar](50) null,
+-- -- giảm giá theo loại sản phẩm
+-- create table [dbo].[discount_codes](
+-- 	[discount_code_id]		[int] not null identity(1,1) primary key,
+-- 	[category_id]			[int] not null,
+-- 	[name]					[nvarchar](50) null,
+-- 	[used_time]				[datetime] null,
+-- 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
+-- 	[created_date]			[datetime] null,
+-- 	[created_by]			[nvarchar](50) null,
+-- 	[created_note]			[nvarchar](50) null,
+-- 	[update_date]			[datetime] null,
+-- 	[update_by]				[nvarchar](50) null,
+-- 	[update_note]			[nvarchar](50) null,
 	
-	CONSTRAINT FK2_category_id FOREIGN KEY (category_id)		REFERENCES categorys(category_id),
-);
+-- 	CONSTRAINT FK2_category_id FOREIGN KEY (category_id)		REFERENCES categorys(category_id),
+-- );
 
 
 -- thông tin bài viết
@@ -164,6 +164,7 @@ create table [dbo].[sales_infos](
 create table [dbo].[orders](
 	[order_id]				[int] not null identity(1,1) primary key,
 	[user_id]				[int] not null,
+	[product_id]			[int] not null,
 	[total_qty]				[numeric] default 0 null,
 	[total_price]			[numeric] default 0 null,
 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
@@ -175,24 +176,25 @@ create table [dbo].[orders](
 	[update_note]			[nvarchar](50) null,
 
 	CONSTRAINT FK2_user_id FOREIGN KEY (user_id)    		REFERENCES users(user_id),
-);
-
-
-create table [dbo].[order_detail](
-	[order_id]				[int] not null identity(1,1) primary key,
-	[product_id]			[int] not null,
-	[qty]					[numeric] default 0 null,
-	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
-	[created_date]			[datetime] null,
-	[created_by]			[nvarchar](50) null,
-	[created_note]			[nvarchar](50) null,
-	[update_date]			[datetime] null,
-	[update_by]				[nvarchar](50) null,
-	[update_note]			[nvarchar](50) null,
-
-	CONSTRAINT FK_order_id FOREIGN KEY (order_id)			REFERENCES orders(order_id),
 	CONSTRAINT FK2_product_id FOREIGN KEY (product_id)		REFERENCES products(product_id),
 );
+
+
+-- create table [dbo].[order_detail](
+-- 	[order_id]				[int] not null identity(1,1) primary key,
+-- 	[product_id]			[int] not null,
+-- 	[qty]					[numeric] default 0 null,
+-- 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
+-- 	[created_date]			[datetime] null,
+-- 	[created_by]			[nvarchar](50) null,
+-- 	[created_note]			[nvarchar](50) null,
+-- 	[update_date]			[datetime] null,
+-- 	[update_by]				[nvarchar](50) null,
+-- 	[update_note]			[nvarchar](50) null,
+
+-- 	CONSTRAINT FK_order_id FOREIGN KEY (order_id)			REFERENCES orders(order_id),
+-- 	CONSTRAINT FK2_product_id FOREIGN KEY (product_id)		REFERENCES products(product_id),
+-- );
 
 
 -- thông tin hóa đơn nhập hàng
