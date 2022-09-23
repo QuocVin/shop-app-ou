@@ -38,7 +38,14 @@ export default function AppForm({
 					<Button className='btn-action2 btn-submit' type="submit" fullWidth>{formType === 'login' ? 'Submit' : 'Đăng ký'}</Button>
 				</Box>
 			)
-		} else {
+		} else if (['profile'].includes(formType)) {
+			return (
+				<Box className={classes.AppForm}>
+					<Button className='btn-action2 btn-submit' type="submit" fullWidth>Cập nhật</Button>
+				</Box>
+			)
+		}
+		else {
 			return (
 				<></>
 			)
@@ -79,6 +86,11 @@ export default function AppForm({
 							</Grid>
 						)
 						|| field.component?.datePicker && (
+							<Grid item xs={_xs} key={idx + '-form-grip'}>
+								<AppInput field={field} control={control} component={field.component} />
+							</Grid>
+						)
+						|| field.component?.inputImage && (
 							<Grid item xs={_xs} key={idx + '-form-grip'}>
 								<AppInput field={field} control={control} component={field.component} />
 							</Grid>

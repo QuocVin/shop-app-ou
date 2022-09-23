@@ -45,5 +45,5 @@ export const AdminProductColumns = [
 ]
 
 export const formSearch = [
-	{ id: 'name', label: 'Tên người dùng', xs: 3, component: { textField: true } },
+	{ id: 'name', label: 'Tên sản phẩm', xs: 3, component: { textField: true } },
 ]

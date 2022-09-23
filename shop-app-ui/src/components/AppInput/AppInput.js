@@ -52,7 +52,7 @@ const BootstrapInput = withStyles((theme) => ({
 
 export default function AppInput({ field = {}, control, className = '', component = {}, options = [] }) {
 	const classes = useStyles();
-	const { radio, selectBox, checkbox, textField, datePicker } = component;
+	const { radio, selectBox, checkbox, textField, datePicker, inputImage } = component;
 
 	const RenderLabel = ({ label = '', labelClass }) => {
 		const arrClasses = [];
@@ -70,7 +70,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 		)
 	}
 
-	const RenderInput = (component = { radio: false, selectBox: false, checkbox: false, textField: false, datePicker: false }) => {
+	const RenderInput = (component = { radio: false, selectBox: false, checkbox: false, textField: false, datePicker: false, inputImage: false }) => {
 		// tham khảo cách này
 		// const elm = {
 		//     radio: <></>,
@@ -159,7 +159,7 @@ export default function AppInput({ field = {}, control, className = '', componen
 						const _more = {};
 						if (field?.multiline) {
 							_more.multiline = true;
-							_more.rows = field.rows
+							_more.minRows = field.rows
 						}
 						if (field?.required) {
 							_more.required = true;
@@ -224,6 +224,18 @@ export default function AppInput({ field = {}, control, className = '', componen
 						)
 					}}
 				/>
+			)
+			|| inputImage && (
+				<FormControl component="fieldset" className={[classes.marginLeft, classes.boxInput].join(' ')}>
+					<input
+						accept="image/*"
+						// className={classes.input}
+						id={field.id}
+						multiple
+						type="file"
+						ref={field.value}
+					/>
+				</FormControl>
 			)
 	}
 

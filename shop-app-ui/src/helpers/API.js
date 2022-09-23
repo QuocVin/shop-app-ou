@@ -24,6 +24,7 @@ export let endpoints = {
 
 	'admin/order-by-user': (params) => '/api/orders/getOrderByUser' + `?user_id=${params}`,
 	'admin/create-new-order': '/api/orders/insert',
+	'admin/get-order-year': (params) => '/api/orders/getOrderInYear' + `?year=${params}`,
 
 	'admin/category': '/api/categorys/getAll',
 }

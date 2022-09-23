@@ -31,23 +31,14 @@ exports.getOrderByUser = async (tableName, params) => {
 	}
 };
 
-exports.getSaleInfoList = async (tableName, params) => {
+exports.getOrderInYear = async (tableName, params) => {
 	const sql = `
-		SELECT	S.sales_info_id,
-		        S.product_id,
-				S.title,
-				S.content,
-				P.name				AS product_name,
-				P.price,
-				S.validationflag,
-				S.update_note,
-				S.update_date,
-				S.created_date
-		FROM	sales_infos S
-				LEFT OUTER JOIN products P
-					ON	P.product_id = S.product_id
-		WHERE	S.title like '%${params.title || ''}%'
-		ORDER BY S.update_date desc, S.title
+			SELECT	COUNT(1)				AS COUNT_ORDER,
+					MONTH(created_date)		AS MONTH_ORDER
+			FROM	orders
+			WHERE	YEAR(created_date) = ${params.year}
+			GROUP BY MONTH(created_date)
+			ORDER BY MONTH(created_date)
 		`;
 	try {
 		const ret = await db.query(sql, { type: QueryTypes.SELECT });

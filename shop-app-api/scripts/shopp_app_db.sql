@@ -203,34 +203,34 @@ create table [dbo].[orders](
 -- );
 
 
--- thông tin hóa đơn nhập hàng	-- chưa xây dựng
-create table [dbo].[import_products](
-	[import_product_id]		[int] not null identity(1,1) primary key,
-	[total_qty]				[nvarchar](50) null,
-	[total_price]			[numeric] default 0 null,
-	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
-	[created_date]			[datetime] null,
-	[created_by]			[nvarchar](50) null,
-	[created_note]			[nvarchar](50) null,
-	[update_date]			[datetime] null,
-	[update_by]				[nvarchar](50) null,
-	[update_note]			[nvarchar](50) null,
-);
+-- -- thông tin hóa đơn nhập hàng	-- chưa xây dựng
+-- create table [dbo].[import_products](
+-- 	[import_product_id]		[int] not null identity(1,1) primary key,
+-- 	[total_qty]				[nvarchar](50) null,
+-- 	[total_price]			[numeric] default 0 null,
+-- 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
+-- 	[created_date]			[datetime] null,
+-- 	[created_by]			[nvarchar](50) null,
+-- 	[created_note]			[nvarchar](50) null,
+-- 	[update_date]			[datetime] null,
+-- 	[update_by]				[nvarchar](50) null,
+-- 	[update_note]			[nvarchar](50) null,
+-- );
 
 
-create table [dbo].[import_product_detail](
-	[import_product_id]		[int] not null identity(1,1) primary key,
-	[product_id]			[int] not null,
-	[qty]					[nvarchar](50) null,
-	[price_import]			[numeric] default 0 null,
-	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
-	[created_date]			[datetime] null,
-	[created_by]			[nvarchar](50) null,
-	[created_note]			[nvarchar](50) null,
-	[update_date]			[datetime] null,
-	[update_by]				[nvarchar](50) null,
-	[update_note]			[nvarchar](50) null,
+-- create table [dbo].[import_product_detail](
+-- 	[import_product_id]		[int] not null identity(1,1) primary key,
+-- 	[product_id]			[int] not null,
+-- 	[qty]					[nvarchar](50) null,
+-- 	[price_import]			[numeric] default 0 null,
+-- 	[validationflag]		[nvarchar] default '1' null,			-- '1' là còn sử dụng, '0' là ngưng sử dụng, có thể hiểu là active
+-- 	[created_date]			[datetime] null,
+-- 	[created_by]			[nvarchar](50) null,
+-- 	[created_note]			[nvarchar](50) null,
+-- 	[update_date]			[datetime] null,
+-- 	[update_by]				[nvarchar](50) null,
+-- 	[update_note]			[nvarchar](50) null,
 
-	CONSTRAINT FK_import_product_id FOREIGN KEY (import_product_id)		REFERENCES import_products(import_product_id),
-	CONSTRAINT FK3_product_id FOREIGN KEY (product_id)					REFERENCES products(product_id),
-);
+-- 	CONSTRAINT FK_import_product_id FOREIGN KEY (import_product_id)		REFERENCES import_products(import_product_id),
+-- 	CONSTRAINT FK3_product_id FOREIGN KEY (product_id)					REFERENCES products(product_id),
+-- );

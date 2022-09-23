@@ -206,17 +206,19 @@ export default function AdminUserManagementDetail() {
 
 				{/* tìm kiếm */}
 				<AppForm
-					fields={formFields(testFun, datePicker)}
+					fields={formFields(testFun, datePicker, formType === 'insert' ? true : false)}
 					control={control}
 					onGoBack={handleGoBack}
 					onGoSubmit={formType === 'insert' ? createNewUser : updateInfoUser}
 					formType={formType}
+					isCreate={formType === 'insert' ? true : false}
 				/>
 			</div>
-			<div className='box-order-list'>
-				<Typography variant="h4" className='title-user-manager'>Lịch sử giao dịch</Typography>
-				<AppTable columns={ProfileOrderColumns} data={orderUser} isBtn={false} />
-			</div>
+			{formType === 'insert' ? <></>
+				: <div className='box-order-list'>
+					<Typography variant="h4" className='title-user-manager'>Lịch sử giao dịch</Typography>
+					<AppTable columns={ProfileOrderColumns} data={orderUser} />
+				</div>}
 			<AppAlert open={openAlert} handleClose={handleCloseAlert} typeAlert={alertInfo?.typeAlert} label={alertInfo?.label} />
 		</Container>
 	);

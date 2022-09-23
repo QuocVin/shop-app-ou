@@ -15,7 +15,6 @@ import {
 	AppAlert,
 	AppForm,
 } from '../../components';
-import { ProtectRoutes } from '../../routes/protect-route';
 import { formFields } from "./SaleInfoDetail-const"
 import { useForm, Controller } from "react-hook-form";
 import { rolePaths } from '../../helpers/utils'
@@ -101,11 +100,11 @@ export default function SaleInfoDetail() {
 			} else {
 				setAlertInfo({
 					typeAlert: { success: true },
-					label: 'Tạo mới người dùng thành công!!!'
+					label: 'Đặt hàng thành công!!!'
 				})
 				setOpenAlert(true);
 				setTimeout(() => {
-					history.push(ProtectRoutes.AdminUserManagement.path);
+					history.push('/');
 				}, 1500);
 			}
 		} catch (err) {

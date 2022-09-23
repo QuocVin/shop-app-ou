@@ -14,14 +14,18 @@ const optionsRole = [
 	{ role_name: 'manager', name: 'Nhân viên' },
 ]
 
-export const formFields = (onChangeDatePicker, valueDatePicker) => {
+export const formFields = (onChangeDatePicker, valueDatePicker, isCreate = false) => {
+	let field = isCreate ? [
+		{ id: 'role_name', label: { title: 'Quyền' }, xs: 5, component: { selectBox: true }, options: optionsRole, required: true, }
+	]
+		: [];
 	return [
 		{ id: 'username', label: { title: 'Tên tài khoản' }, xs: 12, component: { textField: true }, required: true },
 		{ id: 'password', label: { title: 'Mật khẩu' }, xs: 12, component: { textField: true }, required: true, type: 'password' },
 		{ id: 'name', label: { title: 'Tên người dùng' }, xs: 12, component: { textField: true }, required: true, },
 		{ id: 'gen', label: { title: 'Giới tính' }, xs: 5, component: { radio: true }, options: optionsGen, required: true },
 		{ id: 'date_ob', label: { title: 'Ngày sinh' }, xs: 5, component: { datePicker: true }, required: true, onChangeDatePicker: onChangeDatePicker, value: valueDatePicker },
-		{ id: 'role_name', label: { title: 'Quyền' }, xs: 5, component: { selectBox: true }, options: optionsRole, required: true, },
+		...field,
 		{ id: 'phone', label: { title: 'Số điện thoại' }, xs: 5, component: { textField: true }, type: 'number' },
 	]
 }
