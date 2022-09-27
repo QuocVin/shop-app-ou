@@ -25,6 +25,12 @@ export const ProfileOrderColumns = [
 		width: 250,
 	},
 	{
+		id: "price",
+		name: "Giá",
+		width: 100,
+		align: 'right'
+	},
+	{
 		id: "total_qty",
 		name: "Số lượng",
 		width: 100,
@@ -45,3 +51,43 @@ export const ProfileOrderColumns = [
 		align: 'center'
 	},
 ]
+
+export const columnExport = [
+	{
+		field: 'id',
+		headerName: 'ID',
+		width: 70,
+	},
+	{
+		field: 'product_name',
+		headerName: 'Tên sản phẩm',
+		width: 190,
+	},
+	{
+		field: 'price',
+		headerName: 'Giá',
+		type: 'number',
+		width: 100,
+	},
+	{
+		field: 'total_qty',
+		headerName: 'Số lượng',
+		type: 'number',
+		width: 80,
+	},
+	{
+		field: 'total_price',
+		headerName: 'Tổng giá',
+		type: 'number',
+		width: 150,
+	},
+	{
+		field: 'update_date',
+		headerName: 'Ngày thực hiện',
+		width: 170,
+	},
+];
+
+export function createData(id, product_name, price, total_qty, total_price, update_date,) {
+	return { id, product_name, price, total_qty, total_price, update_date, };
+}

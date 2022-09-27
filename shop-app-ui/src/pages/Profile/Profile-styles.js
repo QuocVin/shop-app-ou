@@ -13,7 +13,21 @@ export const useStyles = makeStyles((theme) => ({
 		},
 		'& .title-profile': {
 			padding: '0 0 20px 0',
-		}
+		},
+		'& .row-title-order': {
+			display: 'flex',
+			justifyContent: 'space-between',
+			'& .box-export-tool': {
+				width: '110px',
+				height: '37px',
+				'& .MuiDataGrid-main': {
+					display: 'none',
+				},
+				'& .MuiDataGrid-footerContainer': {
+					display: 'none',
+				},
+			}
+		},
 	},
 }));
 

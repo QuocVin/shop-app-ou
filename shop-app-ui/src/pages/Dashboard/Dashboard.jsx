@@ -37,12 +37,11 @@ export default function Dashboard() {
 		const _pathAPI = endpoints['admin/get-order-year'](year)
 		API.get(_pathAPI).then(res => {
 			setCountOrder(res.data.result)
-			console.info(res.data.result)
 		})
 	}
 
 	const handleChange = (event) => {
-		setYear(event.target.value);
+		setYear(event.target.value.replace(/[^0-9]/g, ''));
 	}
 
 	const handleSearch = () => {

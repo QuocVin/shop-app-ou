@@ -57,18 +57,6 @@ export default function AppForm({
 			<Grid container spacing={1}>
 				{fields.map((field, idx) => {
 					let _xs = field?.xs ? field.xs : 6;
-					// if (field.component?.radio) {
-					// 	return (
-					// <Grid item xs={_xs} key={idx + '-form-grip'}>
-					// 	<AppInput field={field} control={control} component={field.component} options={options} />
-					// </Grid>
-					// 	)
-					// } else
-					// return (
-					// 	<Grid item xs={_xs} key={idx + '-form-grip'}>
-					// 		<AppInput field={field} control={control} component={field.component} />
-					// 	</Grid>
-					// )
 					return field.component?.radio && (
 						<Grid item xs={_xs} key={idx + '-form-grip'}>
 							<AppInput field={field} control={control} component={field.component} options={field.options} />

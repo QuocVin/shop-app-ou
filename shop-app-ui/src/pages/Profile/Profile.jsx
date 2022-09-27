@@ -1,30 +1,31 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Box,
 	Typography,
-	Container,
-	Button,
-	TextField,
 	Grid,
-	TablePagination,
 } from '@material-ui/core';
 import API, { endpoints } from '../../helpers/API';
 import { useStyles } from './Profile-styles';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import {
 	AppAlert,
 	AppForm,
 	AppTable,
 } from '../../components';
-import { ProtectRoutes } from '../../routes/protect-route';
-import { formFields, userKey, ProfileOrderColumns } from "./Profile-const"
+import { formFields, userKey, ProfileOrderColumns, columnExport, createData } from "./Profile-const"
 import { useForm, Controller } from "react-hook-form";
-import { rolePaths } from '../../helpers/utils'
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
 import cookies from 'react-cookies';
-import Alert from '@material-ui/lab/Alert';
 import { infoRequest } from '../../helpers/utils';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+import moment from "moment";
+
+function CustomToolbar() {
+	return (
+		<GridToolbarContainer>
+			<GridToolbarExport />
+		</GridToolbarContainer>
+	);
+}
 
 export default function Profile() {
 	const classes = useStyles();
@@ -36,6 +37,7 @@ export default function Profile() {
 	const [formType, setFormType] = useState('profile');
 	const [alertInfo, setAlertInfo] = React.useState(false);
 	const [orderUser, setOrderUser] = useState([]);
+	const [dataExport, setDataExport] = useState([]);
 	let user = cookies.load("user");
 
 	useEffect(() => {
@@ -59,6 +61,13 @@ export default function Profile() {
 		const _path = endpoints['admin/order-by-user'](params)
 		API.get(_path).then(res => {
 			setOrderUser(res.data.result);
+
+			// hiện tại orderUser, dataExport là cùng giá trị, nhưng chưa sửa DataGrid nên phải tách riêng cho thư viện hiểu và hoạt động
+			setDataExport(
+				res.data.result.map((b, idx) =>
+					createData(b.order_id, b.product_name, b.price, b.total_qty, b.total_price, moment(b.update_date).format("DD-MM-YYYY").toString()),
+				)
+			);
 		})
 	}
 
@@ -142,10 +151,22 @@ export default function Profile() {
 					/>
 				</Grid>
 				<Grid item xs={7} className='orders-user'>
-					<Typography variant="h4" className='title-profile'>Lịch sử giao dịch</Typography>
+					<div className='row-title-order'>
+						<Typography variant="h4" className='title-profile'>Lịch sử giao dịch</Typography>
+						<div className='box-export-tool'>
+							<DataGrid
+								rows={dataExport}
+								columns={columnExport}
+								components={{
+									Toolbar: CustomToolbar,
+								}}
+							/>
+						</div>
+					</div>
 					<AppTable columns={ProfileOrderColumns} data={orderUser} isBtn={false} />
 				</Grid>
 			</Grid>
+
 			<AppAlert open={openAlert} handleClose={handleCloseAlert} typeAlert={alertInfo?.typeAlert} label={alertInfo?.label} />
 		</Box>
 	);
