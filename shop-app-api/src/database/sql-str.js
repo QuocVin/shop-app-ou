@@ -4,7 +4,7 @@ const { MOMENT_DATE, parse2Str } = require("../utils/date");
 exports.genSqlAll = ({ tableName }) => {
   return `
     SELECT *
-    FROM [${tableName}]
+    FROM ${tableName}
     ORDER BY update_date;
   `;
 };
@@ -15,7 +15,7 @@ exports.genSqlPage = ({ tableName, offset, limit, where }) => {
   // let limit = 10, offset = 0;
   return `
     SELECT *
-    FROM [${tableName}]
+    FROM ${tableName}
     ${whereCmd}
     ORDER BY update_date desc, name;
   `;
