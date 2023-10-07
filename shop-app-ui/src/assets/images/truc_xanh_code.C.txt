@@ -1,0 +1,391 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Game_truc_xanh
+{
+
+
+
+    public partial class FormPlay : Form
+    {
+        string pathFile;
+        Random rand = new Random();
+        PictureBox[] arrPic;
+        string patnImg;
+        int n = 4, dem = 0;                // n là số phần tử, dem là biến theo dõi số cặp hình đã mở
+        private DateTime curTime;           // dùng để đếm thời gian
+        int scorc = 0;                      // tính điểm cho vui
+        int count = 0;
+        List<string> list1 = new List<string>();
+        int checkCustom = 0;
+
+
+
+        public FormPlay()
+        {
+            InitializeComponent();
+            plCustom.Visible = false;
+            panel1.Visible = false;
+        }
+
+        Form formInput;
+        public Form Form_Input
+        {
+            set { formInput = value; }
+        }
+
+        public FormPlay (String name):this()
+        {
+            lbGamer.Text = name;
+        }
+
+        
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            lbName.Text = "          1851050185 - Lê Quốc Vin          ";
+            pathFile = Application.StartupPath + @"\HighScore.txt";
+            GameStart();
+        }
+
+
+        // Khởi tạo các điểm ảnh, cài thuộc tính, vị trí như ma trận -> method ranPic để phân bố ảnh
+        private void  Init()
+        {
+            patnImg = Application.StartupPath + @"\Images\";
+            arrPic = new PictureBox[n*n];
+            int k = 0, j = 0;
+            int x1 = (int)(panel1.Height / n * 0.9), y1 = (int)(panel1.Width / n * 0.9);
+            int x2 = (int)(panel1.Height / n * 0.93), y2 = (int)(panel1.Width / n * 0.93);
+            for (int i = 0; i < arrPic.Length; i++)
+            {
+                arrPic[i] = new PictureBox();
+                arrPic[i].Size = new Size(x1, y1);
+                arrPic[i].Image = Image.FromFile(patnImg + "0.jpg");
+                arrPic[i].Location = new Point(panel1.Location.X + k * x2, panel1.Location.Y + j * y2);
+                arrPic[i].Enabled = true;
+                arrPic[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                arrPic[i].BorderStyle = BorderStyle.FixedSingle;
+                arrPic[i].Click += new EventHandler(pic_Click);
+                this.Controls.Add(arrPic[i]);
+                k++;
+                if (k == n)
+                {
+                    k = 0; j++;
+                }
+            }
+        }
+
+        //int turnClick;   // chưa dùng tới
+        private void pic_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = (PictureBox)sender;
+            if (checkCustom == 1)
+            {
+                string a = pic.Tag.ToString();
+                int b = Convert.ToInt32(a);
+                pic.Image = Image.FromFile(list1[b]);
+            }
+            else
+                pic.Image = Image.FromFile(patnImg + pic.Tag.ToString() + ".jpg");
+
+            count++;
+            lbCount.Text = count.ToString();
+            pic.Enabled = false;
+            //pic.Text = " ";
+            checkpic();
+            if (dem == arrPic.Length / 2)
+            {
+                dem = 0;
+                timePlay.Stop();
+                Check_HighScore();
+                var result = MessageBox.Show("Bạn đã hoàn thành trò chơi!\nBạn có muốn chơi mới?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
+                if (result == DialogResult.Yes)
+                    rePlay();
+            }
+        }
+
+        //  kiểm tra sau khi click 2 hình liên tiếp
+        private void checkpic()
+        {
+            for (int i = 0; i < arrPic.Length - 1; i++)
+            {
+                for (int j = i + 1; j < arrPic.Length; j++)
+                {
+                    if (arrPic[i].Enabled == false && arrPic[j].Enabled == false)       // lỗi chỗ này nếu ko để true
+                    {
+                        if (arrPic[i].Tag.ToString()  == arrPic[j].Tag.ToString())
+                        {
+                            System.Threading.Thread.Sleep(300);
+                            arrPic[i].Visible = false;
+                            arrPic[j].Visible = false;
+
+                            arrPic[i].Enabled = true;     // vẫn để true lại là để tránh lỗi khi click cặp hình sau
+                            arrPic[j].Enabled = true;     // nếu để false thì sẽ bị lỗi khi duyệt đều kiện ở vòng lặp trên
+                            dem++;
+                            scorc += 10;
+                        }
+                        else
+                        {
+                            System.Threading.Thread.Sleep(300);
+                            arrPic[i].Enabled = true;
+                            arrPic[j].Enabled = true;
+                            arrPic[i].Image = Image.FromFile(patnImg + "0.jpg");
+                            arrPic[j].Image = Image.FromFile(patnImg + "0.jpg");
+                            if (scorc > 0)
+                                scorc -= 5;
+                        }
+                        lbScores.Text = scorc.ToString();
+                    }
+                }
+            }
+        }
+
+        //  random hình ra các ô
+        private void ranPic()
+        {
+            List<int> list = new List<int>();
+            for (int i = 0; i < arrPic.Length / 2; i++)
+            {
+                int j = rand.Next(1, 17);
+                arrPic[i].Tag = j;
+                list.Add(j);
+            }
+            for (int i = arrPic.Length / 2; i < arrPic.Length; i++)
+            {
+                int x = rand.Next(0, list.Count - 1);       // lấy ngẫy nhiên vị trí 1 phần từ trong list
+                arrPic[i].Tag = list[x];
+                list.RemoveAt(x);
+            }
+
+        }
+
+        //  có thể xem method này như nút khỏi động trò chơi
+        private void GameStart()
+        {
+            curTime = new DateTime(2020, 1, 1, 0, 0, time);
+            Init();
+            scorc = 0;
+            dem = 0;
+            count = 0;
+            lbScores.Text = "";
+            lbCount.Text = "";
+            timePlay.Start();
+            if (checkCustom == 1)
+                ran1();
+            else
+                ranPic();
+            Show_HighScore();
+        }
+
+        private void rePlay()
+        {
+            // xóa các arrPic đã được tạo bằng cách ẩn nó đi                        // chưa giải phóng được bộ nhớ
+            for (int i = 0; i < arrPic.Length; i++)
+            {
+                arrPic[i].Visible = false;
+            }
+            
+            
+            timePlay.Stop();
+            pgbTimePlay.Maximum = 0;
+            GameStart();
+        }
+
+
+
+
+
+        // làm dòng text name chạy cho vui
+        private void timeName_Tick(object sender, EventArgs e)
+        {
+            lbName.Text = lbName.Text.Substring(1) + lbName.Text.Substring(0, 1);
+
+
+            //int dx = 5;
+            //lbName.Left += dx;
+            //if (lbName.Left <= 0 || lbName.Right >= ClientRectangle.Width)
+            //    dx = -dx;
+        }
+
+        private void menuExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void menuNewPlay_Click(object sender, EventArgs e)
+        {
+            rePlay();
+        }
+
+
+        int time = 20;
+        
+        private void timePlay_Tick(object sender, EventArgs e)
+        {
+            pgbTimePlay.Minimum = 0;
+            pgbTimePlay.Maximum = time;
+            pgbTimePlay.Step = 1;
+            pgbTimePlay.PerformStep();
+
+            // thời gian đếm ngược
+            TimeSpan dt = new TimeSpan(0, 0, 0, 1, 0);      // ngày, giờ, phút, giấy, mili giây
+            curTime = curTime.Subtract(dt);                 // đếm ngược thời gian
+            lbYourTime.Text = curTime.Minute.ToString() + " : " + curTime.Second.ToString();
+            if (curTime.Minute==0 && curTime.Second==0)
+            {
+                timePlay.Enabled = false;
+                if (MessageBox.Show("Hết thời gian!\nBạn đã thua.", "Thông báo", MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.OK)
+                    rePlay();
+            } 
+
+        }
+
+        private void menuNewPlayer_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            formInput.Show();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Bạn có muốn đóng ứng dụng?", "Cảnh báo",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                e.Cancel = true;
+            else
+                formInput.Close();
+        }
+
+        private void Check_HighScore()
+        {
+
+            StreamReader reader = new StreamReader(string.Format("{0}", pathFile));
+            string text;
+            int moi = Convert.ToInt32(lbScores.Text);
+            text = reader.ReadLine();
+            text = reader.ReadLine();
+            int cu = Convert.ToInt32(text);
+            if (moi > cu)
+            {
+                reader.Close();
+                StreamWriter writer = new StreamWriter(string.Format("{0}", pathFile));
+                text = lbGamer.Text;
+                writer.WriteLine(text);
+                text = lbScores.Text;
+                writer.WriteLine(text);
+                writer.Close();
+            }
+
+
+            
+        }
+
+        private void menuBegin_Click(object sender, EventArgs e)
+        {
+            checkCustom = 0;
+            n = 4;
+            time = n*5;
+            rePlay();
+        }
+
+        private void menuNormal_Click(object sender, EventArgs e)
+        {
+            checkCustom = 0;
+            n = 6;
+            time = n*5;
+            rePlay();
+        }
+
+        private void menuCustom_Click(object sender, EventArgs e)
+        {
+            timePlay.Stop();
+            plCustom.Visible = true;
+            //for (int i = 0; i < arrPic.Length; i++)
+            //{
+            //    arrPic[i].Visible = false;
+            //}
+        }
+
+        private void btCustomPlay_Click(object sender, EventArgs e)
+        {
+            checkCustom = 0;
+            n = Convert.ToInt32(txtCustom.Text);
+            time = n * 5;
+            rePlay();
+            plCustom.Visible = false;
+        }
+
+        private void menuAddimage_Click(object sender, EventArgs e)
+        {
+            checkCustom = 1;
+            timePlay.Stop();
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Multiselect = true;
+            dlg.Filter = "Image file (jpeg, gif, bmp,...)|*.jpg; *.gif; *.bmp; *.png|" +
+                            "jpeg file(*.jpg)|*.jpg|" +
+                            "gif file(*.gif)|*.gif|" +
+                            "bigmap file(*.bmp)|*.bmp|" +
+                            "png file (*bng)|*.png";
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string file in dlg.FileNames)
+                {
+                    list1.Add(file);
+                }
+                rePlay();
+            }
+            else
+            {
+                checkCustom = 0;
+                timePlay.Start();
+            }
+
+
+        }
+
+
+        private void ran1()
+        {
+            List<int> list = new List<int>();
+            for (int i = 0; i < arrPic.Length / 2; i++)
+            {
+                int j = rand.Next(0, list1.Count -1);
+                arrPic[i].Tag = j;
+                list.Add(j);
+            }
+            for (int i = arrPic.Length / 2; i < arrPic.Length; i++)
+            {
+                int x = rand.Next(0, list.Count - 1);       // lấy ngẫy nhiên vị trí 1 phần từ trong list
+                arrPic[i].Tag = list[x];
+                list.RemoveAt(x);
+            }
+        }
+
+        private void Show_HighScore()
+        {
+            StreamReader reader = new StreamReader(string.Format("{0}", pathFile));
+            string text;
+            text = reader.ReadLine();
+            lbNameHs.Text = text;
+            text = reader.ReadLine();
+            lbScoreHs.Text = text;
+            reader.Close();
+
+        }
+
+
+
+
+
+    }
+}
